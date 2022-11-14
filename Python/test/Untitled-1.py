@@ -31,3 +31,29 @@ for i in range(5):
     print(i)
 for i in range(3, 12, 5):
     print(i)
+str1 = "test class string in Python"
+print(str1.find('c'))
+
+str2 = ['test', 'class', 'string', 'in', 'Python']
+str3 = ['again', '?']
+print(len(str1))
+temp = "."
+str2.append(temp)
+str2.insert(1, 'the')
+str2.extend(str3)
+print(str1)
+print(str2)
+
+findWord1 = 'class'
+findWord2 = 'string'
+if findWord1 in str2:
+    print("Yes")
+else:
+    print("No")
+if findWord2 not in str2:
+    print("No")
+else:
+    print("Yes")
+del str2[7]
+print(str2)
+str2.pop
