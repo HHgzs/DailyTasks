@@ -1,0 +1,2511 @@
+// 1-1
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "Welcome to C++!" << endl; // comments bala bala
+    cout << "Welcome to Qiushi!" << endl;
+    cout << "Welcome to Tianjin University!" << endl;
+    return 0;
+}
+
+// 1-2
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "(10.5 + 2 * 3) / (45 - 3.5) = ";
+    cout << (10.5 + 2 * 3) / (45 - 3.5) << endl;
+    return 0;
+}
+
+// 1-3
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a = 10;
+    double r = 2.0;
+    int s = 32767;
+
+    cout << s << endl;
+    cout << r * r << endl;
+
+    return 0;
+}
+
+// 1-4
+#include <iostream>
+using namespace std;
+int main()
+{
+    double r = 2.0;
+    int s = 32767;
+
+    cin >> s >> r;
+
+    cout << s << endl;
+    cout << r * r << endl;
+
+    return 0;
+}
+
+// 1-5
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    const int LENGTH = 10;
+    const int WIDTH = 5;
+    const char NEWLINE = '\n';
+    int area;
+
+    area = LENGTH * WIDTH;
+    cout << area;
+    cout << NEWLINE;
+    return 0;
+}
+
+// 1-6
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a;
+    cin >> a;
+    cout << a / 3600 << ":" << (a % 3600) / 60 << ":" << (a % 3600) % 60;
+    return 0;
+}
+
+// 1-1hk
+#include <iostream>
+#include <iomanip>
+using namespace std;
+int main()
+{
+    double c;
+    cin >> c;
+    double a = c / 12;
+    cout << fixed << setprecision(2) << 6 * a * a << " " << a * a * a;
+    return 0;
+}
+
+// 1-2hk
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+int main()
+{
+    double x1, y1, x2;
+    cin >> x1 >> y1 >> x2;
+    cout << fixed << setprecision(2) << abs(x1) + abs(y1) + abs(x2);
+    return 0;
+}
+
+// 2-1
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a;
+    int b;
+    cin >> a >> b;
+    if (a > b)
+        cout << "a > b";
+    else if (a < b)
+        cout << "a < b";
+    else
+        cout << "a == b";
+    return 0;
+}
+
+// 2-2
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a;
+    int b;
+    cin >> a >> b;
+    if (a > b)
+        cout << "a > b";
+    else if (a < b)
+        cout << "a < b";
+    else
+        cout << "a == b";
+
+    getchar();
+    return 0;
+}
+
+// 2-3
+#include <iostream>
+using namespace std;
+
+void swap(int &n1, int &n2)
+{
+    int temp = n1;
+    n1 = n2;
+    n2 = temp;
+}
+
+int main()
+{
+    int a;
+    int b;
+    int c;
+    cin >> a >> b >> c;
+    if (a > b)
+        swap(a, b);
+    if (b > c)
+        swap(b, c);
+    if (a > b)
+        swap(a, b);
+    cout << a << " " << b << " " << c;
+    return 0;
+}
+
+// 2-4
+#include <iostream>
+using namespace std;
+int main()
+{
+    int W, H, x, y, r;
+    cin >> W >> H >> x >> y >> r;
+    if (x >= r && x + r <= W && y >= r && y + r <= H)
+        cout << "Yes";
+    else
+        cout << "No";
+    return 0;
+}
+
+// 3-1
+#include <iostream>
+using namespace std;
+int main()
+{
+    int x;
+    int i = 1;
+    bool m = 1;
+    while (m)
+    {
+        cin >> x;
+        if (x == 0)
+        {
+            m = 0;
+            break;
+        }
+        cout << "Case"
+             << " " << i << ":"
+             << " " << x << endl;
+        i++;
+    }
+    // getchar();
+    return 0;
+}
+
+// 3-2
+#include <iostream>
+using namespace std;
+void swap(int &n1, int &n2)
+{
+    int temp = n1;
+    n1 = n2;
+    n2 = temp;
+}
+int main()
+{
+    bool tip = 1;
+    int x, y;
+    while (tip)
+    {
+        cin >> x >> y;
+        if (x == 0 && y == 0)
+        {
+            tip = 0;
+            break;
+        }
+        if (x > y)
+            swap(x, y);
+
+        cout << x << " " << y << endl;
+    }
+    getchar();
+    return 0;
+}
+
+// 3-3
+#include <iostream>
+using namespace std;
+void swap(int &n1, int &n2)
+{
+    int temp = n1;
+    n1 = n2;
+    n2 = temp;
+}
+int main()
+{
+    int a, b, c;
+    bool tip = 1;
+    int num = 0;
+    while (tip)
+    {
+        num = 0;
+        cin >> a >> b >> c;
+        if (a == 0 && b == 0 && c == 0)
+        {
+            tip = 0;
+            break;
+        }
+
+        if (a > b)
+            swap(a, b);
+
+        for (int i = a; i <= b; i++)
+        {
+            if (c % i == 0)
+                num++;
+        }
+        cout << num << endl;
+    }
+    getchar();
+    return 0;
+}
+
+// 3-4
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+int main()
+{
+    int r;
+    cin >> r;
+    double s = r * r * 3.141592653589793;
+    double c = r * 6.283185307179586;
+    cout << fixed << setprecision(6) << s << " " << c;
+    getchar();
+    return 0;
+}
+
+// 4-1
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+    while (true)
+    {
+        double a;
+        double b;
+        char c;
+        cin >> a >> c >> b;
+        if (c == '?')
+            break;
+        if (c == '+')
+            cout << a + b << endl;
+        else if (c == '-')
+            cout << a - b << endl;
+        else if (c == '*')
+            cout << a * b << endl;
+        else if (c == '/')
+            cout << a / b << endl;
+    }
+
+    getchar();
+    return 0;
+}
+
+// 4-2
+#include <iostream>
+using namespace std;
+int main()
+{
+    int numbers;
+    long sum = 0;
+    cin >> numbers;
+    long array[numbers];
+    for (int i = 0; i < numbers; i++)
+        cin >> array[i];
+    for (int i = 0; i < numbers; i++)
+        sum += array[i];
+    long max = array[0];
+    long min = array[0];
+    for (int i = 0; i < numbers; i++)
+    {
+        if (array[i] > max)
+            max = array[i];
+        if (array[i] < min)
+            min = array[i];
+    }
+    cout << min << " " << max << " " << sum << endl;
+    return 0;
+}
+
+// 4-3
+#include <iostream>
+using namespace std;
+int main()
+{
+    while (true)
+    {
+        int H, W;
+        cin >> H >> W;
+        if (H == 0 && W == 0)
+            break;
+
+        for (int i = 0; i < H; i++)
+        {
+            for (int j = 0; j < W; j++)
+                cout << "#";
+            cout << '\n';
+        }
+        cout << '\n';
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 4-4
+#include <iostream>
+using namespace std;
+int main()
+{
+    while (true)
+    {
+        int H, W;
+        cin >> H >> W;
+        if (H == 0 && W == 0)
+            break;
+
+        for (int i = 0; i < H; i++)
+        {
+            if (i == 0 || i == H - 1)
+            {
+                for (int j = 0; j < W; j++)
+                    cout << "#";
+                cout << '\n';
+            }
+            else
+            {
+                for (int j = 0; j < W; j++)
+                {
+                    if (j == 0 || j == W - 1)
+                        cout << "#";
+                    else
+                        cout << ".";
+                }
+                cout << '\n';
+            }
+        }
+        cout << '\n';
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 4-5
+#include <iostream>
+using namespace std;
+int main()
+{
+    while (true)
+    {
+        int H, W;
+        cin >> H >> W;
+        if (H == 0 && W == 0)
+            break;
+
+        for (int i = 0; i < H; i++)
+        {
+            for (int j = 0; j < W; j++)
+            {
+                if ((i % 2 == 1 && j % 2 == 1) || (i % 2 == 0 && j % 2 == 0))
+                    cout << "#";
+                else
+                    cout << ".";
+            }
+            cout << '\n';
+        }
+        cout << '\n';
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 4-6
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a;
+    cin >> a;
+    for (int i = 1; i <= a; i++)
+    {
+        int m = i;
+        if (i % 3 == 0 || i % 10 == 3)
+            cout << " " << i;
+        else
+        {
+            while (m)
+            {
+                m /= 10;
+            }
+            if (m % 10 == 3)
+                cout << i;
+        }
+    }
+    cout << endl;
+    getchar();
+    getchar();
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    int i = 1;
+CHECK_NUM:
+    int x = i;
+    if (x % 3 == 0)
+    {
+        cout << " " << i;
+        goto END_CHECK_NUM;
+    }
+INCLUDE3:
+    if (x % 10 == 3)
+    {
+        cout << " " << i;
+        goto END_CHECK_NUM;
+    }
+    x /= 10;
+    if (x)
+        goto INCLUDE3;
+END_CHECK_NUM:
+    if (++i <= n)
+        goto CHECK_NUM;
+
+    cout << endl;
+    getchar();
+    getchar();
+}
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+    int n;
+    int b;
+    int a = 0;
+    int sum = 0;
+    cin >> n;
+    a = n;
+    while (a != 0)
+    {
+        a = a / 10;
+        sum++;
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        if (i % 3 == 0)
+        {
+            cout << " " << i;
+        }
+        else
+        {
+            for (int j = 0; j <= sum; j++)
+            {
+                b = (int)pow(10, j);
+                if ((i / b) % 10 == 3)
+                {
+                    cout << " " << i;
+                    break;
+                }
+            }
+        }
+    }
+    cout << endl;
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-1
+#include <iostream>
+using namespace std;
+int main()
+{
+    int array[100];
+    int len;
+    cin >> len;
+    for (int i = 0; i < len; i++)
+        cin >> array[i];
+    // for (int i = 0; i < len ; i++)
+    // cout << array[i];
+    for (int i = 0; i < len; i++)
+    {
+        cout << array[(len - i - 1)];
+        if (i != (len - 1))
+            cout << " ";
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-2
+#include <iostream>
+using namespace std;
+int main()
+{
+    int num;
+    cin >> num;
+    char box_a[52];
+    int box_b[52];
+    char text_a[52];
+    bool text_b[52];
+    int text_c[52];
+    int each_num;
+    for (int i = 0; i < 52; i++)
+    {
+        text_b[i] = 1;
+    }
+    each_num = 1;
+    for (int i = 0; i < 13; i++)
+    {
+        text_a[i] = 'S';
+        text_c[i] = each_num;
+        each_num++;
+    }
+    each_num = 1;
+    for (int i = 13; i < 26; i++)
+    {
+        text_a[i] = 'H';
+        text_c[i] = each_num;
+        each_num++;
+    }
+    each_num = 1;
+    for (int i = 26; i < 39; i++)
+    {
+        text_a[i] = 'C';
+        text_c[i] = each_num;
+        each_num++;
+    }
+    each_num = 1;
+    for (int i = 39; i < 52; i++)
+    {
+        text_a[i] = 'D';
+        text_c[i] = each_num;
+        each_num++;
+    }
+
+    for (int i = 0; i < num; i++)
+    {
+        cin >> box_a[i] >> box_b[i];
+        if (box_a[i] == 'S')
+            text_b[box_b[i] - 1] = 0;
+        else if (box_a[i] == 'H')
+            text_b[box_b[i] + 12] = 0;
+        else if (box_a[i] == 'C')
+            text_b[box_b[i] + 25] = 0;
+        else if (box_a[i] == 'D')
+            text_b[box_b[i] + 38] = 0;
+    }
+    for (int i = 0; i < 52; i++)
+    {
+        if (text_b[i])
+            cout << text_a[i] << " " << text_c[i] << endl;
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-3
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a, b, c, d;
+    int array[4][3][10];
+    int times;
+    cin >> times;
+
+    for (int m = 0; m < 4; m++)
+    {
+        for (int n = 0; n < 3; n++)
+        {
+            for (int p = 0; p < 10; p++)
+            {
+                array[m][n][p] = 0;
+            }
+        }
+    }
+
+    for (int i = 0; i < times; i++)
+    {
+        a = 0;
+        b = 0;
+        c = 0;
+        d = 0;
+        cin >> a >> b >> c >> d;
+        array[a - 1][b - 1][c - 1] =bhgbb7 d;
+    }
+
+    for (int m = 0; m < 4; m++)
+    {
+        for (int n = 0; n < 3; n++)
+        {
+            for (int p = 0; p < 10; p++)
+            {
+                cout << " " << array[m][n][p];
+            }
+            cout << endl;
+        }
+        if (m != 3)
+            cout << "####################" << endl;
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-4
+#include <iostream>
+using namespace std;
+int main()
+{
+    int m, n, total;
+    cin >> m >> n;
+    int matrix[100][100];
+    int vector[100];
+    int answer[100];
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cin >> matrix[i][j];
+        }
+    }
+    for (int i = 0; i < n; i++)
+        cin >> vector[i];
+    for (int i = 0; i < m; i++)
+    {
+        total = 0;
+        for (int j = 0; j < n; j++)
+        {
+            total += (vector[j] * matrix[i][j]);
+        }
+        cout << total << endl;
+    }
+
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-1hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    bool key = 1;
+    while (key)
+    {
+        char a, b, c;
+        cin >> a >> b >> c;
+        char swap;
+        if (a == (char)48 || b == (char)48 || c == (char)48)
+        {
+            key = 0;
+            break;
+        }
+        if (a > b)
+        {
+            swap = a;
+            a = b;
+            b = swap;
+            swap = 0;
+        }
+        if (b > c)
+        {
+            swap = b;
+            b = c;
+            c = swap;
+            swap = 0;
+        }
+        if (a > b)
+        {
+            swap = a;
+            a = b;
+            b = swap;
+            swap = 0;
+        }
+        cout << a << " " << b << " " << c << endl;
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-2hk
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+int main()
+{
+    int x1, x2, y1, y2;
+    bool key = 1;
+    double S;
+    double L;
+    while (key)
+    {
+        cin >> x1 >> y1 >> x2 >> y2;
+        if (x1 == 0 && x2 == 0 && y1 == 0 && y2 == 0)
+        {
+            key = 0;
+            break;
+        }
+        S = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+        L = sqrt(S);
+        cout << fixed << setprecision(2) << L << endl;
+    }
+    return 0;
+}
+
+// 5-3hk
+#include <iostream>
+#include <iomanip>
+using namespace std;
+int main()
+{
+    double V[1000];
+    int R_number;
+    double R;
+    cin >> R_number;
+    for (int i = 0; i < R_number; i++)
+    {
+        R = 0;
+        cin >> R;
+        V[i] = (4 * (3.1415926535) * R * R * R) / 3;
+    }
+    for (int i = 0; i < R_number; i++)
+        cout << fixed << setprecision(3) << V[i] << endl;
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-4hk
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+int main()
+{
+    int number;
+    cin >> number;
+    double enter_in;
+    double amount[10000];
+    for (int i = 0; i < number; i++)
+    {
+        enter_in = 0;
+        cin >> enter_in;
+        amount[i] = abs(enter_in);
+    }
+    for (int i = 0; i < number; i++)
+        cout << fixed << setprecision(2) << amount[i] << endl;
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-5hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    int number;
+    cin >> number;
+    int grade[1000];
+    for (int i = 0; i < number; i++)
+        cin >> grade[i];
+    for (int i = 0; i < number; i++)
+    {
+        if (grade[i] <= 100 && grade[i] >= 90)
+            cout << "A" << endl;
+        else if (grade[i] <= 89 && grade[i] >= 80)
+            cout << "B" << endl;
+        else if (grade[i] <= 79 && grade[i] >= 70)
+            cout << "C" << endl;
+        else if (grade[i] <= 69 && grade[i] >= 60)
+            cout << "D" << endl;
+        else if (grade[i] <= 59 && grade[i] >= 0)
+            cout << "E" << endl;
+        else
+            cout << "Score is error!";
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-6hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    int times1;
+    cin >> times1;
+    int answer = 1;
+    int array[7];
+    int answer_array[100];
+    for (int j = 0; j < times1; j++)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            cin >> array[i];
+            if (i > 0 && ((array[i] % 2) == 1) && i <= array[0])
+                answer *= array[i];
+        }
+        answer_array[j] = answer;
+        answer = 1;
+    }
+    for (int i = 0; i < times1; i++)
+        cout << answer_array[i] << endl;
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-6hk
+#include <iostream>
+using namespace std;
+long t, n, a, b, s;
+long list[10000];
+int main()
+{
+    cin >> t;
+    for (int j = 1; j <= t; j++)
+    {
+        s = 1;
+        cin >> n;
+        for (int i = 1; i <= n; i++)
+        {
+            cin >> a;
+            if (a % 2 == 1)
+                s = s * a;
+        }
+        list[j] = s;
+    }
+    for (int i = 1; i <= t; i++)
+    {
+        cout << list[i] << endl;
+    }
+    return 0;
+}
+
+// 5-7hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    int num, m, n, ans2, ans3;
+    cin >> num;
+    int array[100][2];
+    for (int i = 0; i < num; i++)
+    {
+        ans2 = 0;
+        ans3 = 0;
+        cin >> m >> n;
+        for (int j = m; j <= n; j++)
+        {
+            if ((j % 2) == 1)
+                ans3 += j * j * j;
+            else
+                ans2 += j * j;
+        }
+        array[i][0] = ans2;
+        array[i][1] = ans3;
+    }
+    for (int i = 0; i < 2; i++)
+        cout << array[i][0] << " " << array[i][1] << endl;
+
+    getchar();
+    getchar();
+    return 0;
+}
+
+// 5-8hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a, b, c;
+    int num;
+    double task;
+    double array[1000];
+    while (true)
+    {
+        a = 0;
+        b = 0;
+        c = 0;
+        cin >> num;
+        if (num == 0)
+            break;
+        for (int i = 0; i < num; i++)
+        {
+            cin >> task;
+            if (task < 0)
+                a += 1;
+            else if (task == 0)
+                b += 1;
+            else
+                c += 1;
+        }
+        cout << a << " " << b << " " << c << endl;
+    }
+
+    getchar();
+    getchar();
+    return 0;
+}
+
+
+
+//6-1
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main()
+{
+    string number;
+    string text = "0";
+    bool key = 1;
+    int total;
+    char num;
+    while (key)
+    {
+        total = 0;
+        cin >> number;
+        if (number == text)
+        {
+            key = 0;
+            break;
+        }
+        for (int i = 0; i < number.length(); i++)
+        {
+
+            num = number[i];
+            total += (int)num - 48;
+        }
+        cout << total << endl;
+    }
+    getchar();
+    return 0;
+}
+
+
+
+
+//6-2
+#include <iostream>
+using namespace std;
+int main()
+{
+    int box[26];
+    for (int i = 0; i < 26; i++)
+        box[i] = 0;
+    bool aa = 1;
+    while (aa)
+    {
+        string word;
+        cin >> word;
+        string key = ".";
+        int a = 0;
+        for (int i = 0; i < word.length(); i++)
+        {
+            a = (int)(char)word[i];
+            if (a == 46)
+            {
+                aa = 0;
+                break;
+            }
+            else if (a < 91)
+                box[a - 65] += 1;
+            else
+                box[a - 97] += 1;
+        }
+    }
+    for (int i = 0; i < 26; i++)
+    {
+        cout << (char)(i + 97) << " : " << box[i] << endl;
+    }
+    getchar();
+    getchar();
+    return 0;
+}
+
+
+
+
+//6-3
+#include <iostream>
+using namespace std;
+int main()
+{
+    string whole, keys;
+    cin >> whole >> keys;
+    int length_whole = whole.length();
+    int length_keys = keys.length();
+    int a = 0;
+    int b = 0;
+    int m;
+    bool key = 1;
+    bool out = 0;
+
+    while (key)
+    {
+        if (b >= length_keys - 1)
+        {
+            key = 0;
+            break;
+        }
+        if (whole[a] == keys[b] && b <= (length_keys - 1) )
+        {
+            if (b = 0)
+                m = a;
+            if (b = (length_keys - 1))
+                out = 1;
+            if (a < (length_whole - 1))
+            {
+                a++;
+                b++;
+            }
+            else
+            {
+                a = 0;
+                b++;
+            }
+           // cout << "Y " << a << " " << b << endl;
+        }
+        else if (whole[a] != keys[b])
+        {
+            if (a <= length_whole - 1)
+            {
+                a = m + 1;
+                m++;
+                b = 0;
+                cout << "N " << a << " " << b << endl;
+            }
+            else
+            {
+                key = 0;
+                break;
+            }
+        }
+    }
+    if (b = length_keys - 1 && out)
+        cout << "Yes";
+    else
+        cout << "No";
+
+    getchar();
+    getchar();
+    return 0;
+}
+
+
+
+//6-3
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string a, b;
+    cin >> a>> b;
+    a.append(a);
+    if (a.find(b) != string::npos)
+        cout << "Yes";
+    else
+        cout << "No";
+    return 0;
+}
+
+
+//6-4
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string T;
+    cin >> T;
+    string s; // find T in s
+    int count = 0;
+    while (cin >> s)
+    {
+        if (s == "END_OF_TEXT")
+            break;
+
+        if (s.find(T) != string::npos)
+            count++;
+    }
+    cout << count;
+    // system("pause");
+}
+
+
+
+//7-1
+#include <iostream>
+#include <cmath>
+using namespace std;
+void() int main()
+{
+    long long int a, b;
+    cin >> a >> b;
+    long long int num;
+    while (a != 0 && b != 0)
+    {
+        num = min(a, b);
+        while (a % num != 0 && b % num != 0)
+        {
+            num--;
+        }
+        if (a % num == 0 && b % num == 0)
+            cout << num << endl;
+        else
+            cout << "1" << endl;
+        cin >> a >> b;
+    }
+
+    return 0;
+}
+
+
+
+
+//7-1
+#include <iostream>
+using namespace std;
+int main()
+{
+    long long x = 0;
+    long long y = 0;
+    cin >> x >> y;
+    while (x != 0 && y != 0)
+    {
+        while (1)
+        {
+            if (x < y) //排序
+            {
+                long long tmp = x;
+                x = y;
+                y = tmp;
+            }
+
+            if (x % y == 0) //若余数为 0 则 y 为两数的最大公约数；
+            {
+                cout << y << endl;
+                break;
+            }
+            else //若余数不为 0，则令 x = y，y = 余数，重复循环
+            {
+                long long tmp = x % y;
+                x = y;
+                y = tmp;
+            }
+        }
+        cin >> x >> y;
+    }
+    return 0;
+}
+
+
+
+
+//7-2
+#include <iostream>
+using namespace std;
+long long mainn(long long num,int times)
+{
+    long long out = 1;
+    long long formal = num;
+    for(int i = 0; i < times; i++)
+    {
+        out = out*num;
+    }
+    return out;
+}
+int main()
+{
+
+    long long num = 0;
+    int times = 1;
+    cin >> num >> times;
+
+    while (num != -1 && times != -1)
+    {
+    num = mainn(num,times);
+    cout << num << endl;
+    cin >> num >> times;
+    }
+    return 0;
+}
+
+
+
+
+//7-3
+#include <bits/stdc++.h>
+using namespace std;
+bool test(int num)
+{
+    int basic = num;
+    int temp = 0;
+    while (num != 0)
+    {
+        temp = temp * 10 + num % 10;
+        num /= 10;
+    }
+    if (temp == basic)
+        return 1;
+    else
+        return 0;
+}
+int main()
+{
+    int basic[1000];
+    int num = 0;
+    int k = 0;
+    for (int i = 1; i < 10; i++)
+    {
+        num = 10 * i + i;
+        if (test(num*num*num)&&test(num*num)&&test(num))
+        {
+            basic[k] = num;
+            k++;
+        }
+    }
+
+    for (int i = 1; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            num = 101 * i + 10 * j;
+            if (test(num*num*num)&&test(num*num)&&test(num))
+            {
+                basic[k] = num;
+                k++;
+            }
+        }
+    }
+    for (int i=0 ;i < k; i++)
+    cout << basic[i]<< endl;
+    return 0;
+}
+
+
+
+//8-1
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+int main()
+{
+    double x1,y1,x2,y2,a;
+    cin >> x1>>y1>>x2 >>y2;
+    a=(x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
+    cout << fixed << setprecision(4)<<pow(a,0.5)<<endl;
+}
+
+
+
+//8-2
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+int main()
+{
+    double a, b, c;
+    cin >> a >> b >> c;
+    cout << fixed << setprecision(8) << 0.5 * a * b * sin(c*0.0174532925199433) << endl;
+    cout << fixed << setprecision(8) << pow((a * a + b * b - 2 * a * b * cos(c*0.0174532925199433)), 0.5)+a+b << endl;
+    cout << fixed << setprecision(8) << (a * b * sin(c*0.0174532925199433)) / a << endl;
+}
+
+
+
+//8-3
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+int main()
+{
+    int a,total;
+    double average,A;
+
+    int box[1000];
+    cin >> a;
+    while(a != 0)
+    {
+        total = 0;
+        A=0;
+        for (int i = 0; i < a ; i++ )
+        {
+            cin >> box[i];
+            total += box[i];
+        }
+        average = total/a;
+        for (int i = 0; i< a ; i++)
+        {
+            A += ((box[i]-average)*(box[i]-average));
+        }
+        cout << fixed << setprecision(8) <<sqrt(A/a) << endl;
+        cin >> a;
+    }
+}
+
+
+
+//8-4
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+void calculate(double array1[], double array2[], int n, int p)
+{
+    double total = 0;
+    for (int i = 0; i < n; i++)
+        total += pow(abs(array1[i] - array2[i]), p);
+    if (p == 1)
+        cout << fixed << setprecision(6) << total;
+    else if (p == 2)
+        cout << fixed << setprecision(6) << sqrt(total);
+    else
+        cout << fixed << setprecision(6) << cbrt(total);
+    cout << endl;
+}
+void compare(double array1[], double array2[], int n)
+{
+
+    double array3[120];
+    for (int i = 0; i < n; i++)
+        array3[i] = abs(array1[i] - array2[i]);
+    double test = array3[0];
+    for (int i = 0; i < n; i++)
+    {
+        if (array3[i] > test)
+            test = array3[i];
+    }
+    cout << fixed << setprecision(6) << test << endl;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    double array1[120], array2[120];
+    for (int i = 0; i < n; i++)
+        cin >> array1[i];
+    for (int i = 0; i < n; i++)
+        cin >> array2[i];
+    calculate(array1, array2, n, 1);
+    calculate(array1, array2, n, 2);
+    calculate(array1, array2, n, 3);
+    compare(array1, array2, n);
+}
+
+
+
+
+
+//8-1hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a;
+    cin >> a;
+    int b = a;
+    for (int i = 0; i < a; i++)
+    {
+
+        for (int j = 0; j < b - 1; j++)
+        {
+            cout << " ";
+
+        }
+        b--;
+        for (int j = 0; j < (2 * i + 1); j++)
+        {
+            cout << "*";
+        }
+        cout << endl;
+    }
+}
+
+
+
+//8-2hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    int box[1000];
+    int num;
+    cin >> num;
+    int text = 0;
+    int swap = 0;
+    int key = 0;
+    while (num != 0)
+    {
+        key = 0;
+        for (int i = 0; i < num; i++)
+        {
+            cin >> box[i];
+        }
+        for (int i = 0; i < num; i++)
+        {
+            text = box[0];
+            if (box[i] < text)
+            {
+                text = box[i];
+                key = i;
+            }
+        }
+        swap = box[0];
+        box[0] = box[key];
+        box[key] = swap;
+        for (int i = 0; i < num; i++)
+        {
+            cout << box[i] << " ";
+        }
+        cout << endl;
+        cin >> num;
+    }
+}
+
+
+
+
+//8-3hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    long long m, n, a;
+    long long box[1000];
+    cin >> m >> n;
+
+    while (m != 0 && n != 0)
+    {
+        // a = m;
+        for (int i = 0; i < m; i++)
+        {
+            cin >> box[i];
+            // if (box[i] > n)
+            //     a = i;
+        }
+        if (n < box[0])
+            cout << n << " ";
+        for (int i = 0; i < m; i++)
+        {
+            cout << box[i] << " ";
+            if (n >= box[i] && n <= box[i + 1])
+                // if (i == a - 1 && n > box[0] && n < box[m - 1])
+                cout << n << " ";
+        }
+        if (n > box[m - 1])
+            cout << n << " ";
+        cout << endl;
+        cin >> m >> n;
+    }
+}
+
+
+
+//8-4hk
+#include <iostream>
+using namespace std;
+int main()
+{
+    int rr, cc, r1, c1;
+    cin >> rr >> cc;
+    int array[1000][1000];
+    int max = -1;
+    for (int i = 0; i < rr; i++)
+    {
+        for (int j = 0; j < cc; j++)
+        {
+            cin >> array[i][j];
+            if (abs(array[i][j]) > max)
+            {
+                r1 = i;
+                c1 = j;
+                max = abs(array[i][j]);
+            }
+        }
+    }
+    cout << r1 + 1 << " "<< c1 + 1  << " "<< array[r1][c1];
+}
+
+
+
+
+//8-5hk
+#include<iostream>
+using namespace std;
+int main()
+{
+    string word;
+    int num;
+    cin >> num;
+    for (int i = 0; i < num ; i++)
+    {
+        cin >> word;
+        char max = word[0];
+        for (int j = 0 ; j < word.length() ; j ++)
+        {
+            if (word[j] > max)
+            max = word[j];
+        }
+        for (int j = 0; j < word.length(); j++)
+        {
+            cout << word[j];
+            if (word[j] == max)
+            cout << "(max)";
+        }
+        cout << endl;
+    }
+}
+
+
+
+
+//8-6hk
+//prime numbers
+#include <iostream>
+using namespace std;
+
+bool test(int num)
+{
+    int basic = num;
+    int temp = 0;
+    while (num != 0)
+    {
+        temp = temp * 10 + num % 10;
+        num /= 10;
+    }
+    if (temp == basic)
+        return 1;
+    else
+        return 0;
+}
+int main()
+{
+    int prime[1000];
+    prime[0] = 2;
+    int amount = 1;
+    bool key = 1;
+    for (int j = 3; j < 1000; j += 2)
+    {
+        key = 1;
+        for (int i = 0; i < amount; i++)
+        {
+            if (j % prime[i] == 0)
+            {
+                key = 0;
+            }
+        }
+        if (key == 1)
+        {
+            prime[amount] = j;
+            amount++;
+        }
+    }
+
+    int a, b;
+    cin >> a >> b;
+    while (a != 0 && b != 0)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            if (test(prime[i]) == 1 && a <= prime[i] && b >= prime[i])
+                cout << prime[i] << endl;
+        }
+        cout << endl;
+        cin >> a >> b;
+    }
+}
+
+
+
+//9-1
+#include <iostream>
+using namespace std;
+void search(string c_string, char key)
+{
+    bool yes_or_no = 0;
+    for (int i = 0; i < c_string.length(); i++)
+    {
+        if (c_string[i] == key)
+            yes_or_no = 1;
+    }
+
+    if (yes_or_no == 1)
+        cout << "Yes";
+    else
+        cout << "No";
+}
+
+int main()
+{
+    string word;
+    char key;
+    cin >> word >> key;
+    search(word, key);
+}
+
+
+
+//9-2
+#include <iostream>
+using namespace std;
+void find_and_change(char get_in)
+{
+    if (get_in < 'E')
+        get_in = 'W' + get_in - 'A';
+    else
+        get_in -= 4;
+    cout << get_in;
+}
+int main()
+{
+    string words;
+    cin >> words;
+    for (int i = 0; i < words.length(); i++)
+    {
+        find_and_change(words[i]);
+    }
+}
+
+
+
+//9-3
+#include <iostream>
+using namespace std;
+int main()
+{
+    int A[10000];
+    int n;
+    int *p = A;
+    cin >> n;
+    for (int i = 0; i < (n * n * 2); i++)
+    {
+        cin >> *(p + i);
+        if (i >= (n * n))
+            *(p - n * n + i) += *(p + i);
+    }
+    for (int i = 0; i < n * n; i++)
+    {
+        cout << *(p + i) << " ";
+        if ((i + 1) % n == 0)
+            cout << endl;
+    }
+}
+
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    int A[10000];
+    int n;
+    cin >> n;
+    for (int i = 0; i < (n * n * 2); i++)
+    {
+        cin >> A[i];
+        if (i >= (n * n))
+            A[i - n * n] += A[i];
+    }
+    for (int i = 0; i < n * n; i++)
+    {
+        cout << A[i] << " ";
+        if ((i + 1) % n == 0)
+            cout << endl;
+    }
+}
+
+
+
+
+
+//10-1
+#include <iostream>
+#include <string>
+using namespace std;
+struct account
+{
+    string usr_name;
+    string usr_password;
+};
+int main()
+{
+    int num;
+    cin >> num;
+    account array[80];
+    for (int i = 0; i < num; i++)
+    {
+        cin >> array[i].usr_name >> array[i].usr_password;
+    }
+    for (int i = 0; i < num; i++)
+    {
+        cout << array[i].usr_name << " " << array[i].usr_password << endl;
+    }
+}
+
+
+
+//10-2
+#include <iostream>
+#include <string>
+using namespace std;
+struct account
+{
+    long long student_id;
+    string name;
+    int score;
+};
+int main()
+{
+    int num_of_total, num_of_search;
+    long long id_while_searching;
+    cin >> num_of_total;
+    account array[80];
+    for (int i = 0; i < num_of_total; i++)
+    {
+        cin >> array[i].student_id >> array[i].name >> array[i].score;
+    }
+    cin >> num_of_search;
+    for (int i = 0; i < num_of_search; i++)
+    {
+        cin >> id_while_searching;
+        for (int j = 0; j < num_of_total; j++)
+        {
+            if (array[j].student_id == id_while_searching)
+            {
+                cout << array[j].name << " " << array[j].score << endl;
+                continue;
+            }
+        }
+    }
+}
+
+
+
+//10-3
+#include <iostream>
+#include <cmath>
+using namespace std;
+struct calculate
+{
+    // int numerator_1;
+    // int denominator_1;
+    // int numerator_2;
+    // int denominator_2;
+    int numerator_answer;
+    int denominator_answer;
+};
+int main()
+{
+    int numerator_1, denominator_1, numerator_2, denominator_2;
+    int n, tp_numerator, tp_denominator;
+    cin >> n;
+    calculate array[10];
+    for (int i = 0; i < n; i++)
+    {
+        // cin >> array[i].numerator_1 >> array[i].denominator_1;
+        // cin >> array[i].numerator_2 >> array[i].denominator_2;
+        cin >> numerator_1 >> denominator_1 >> numerator_2 >> denominator_2;
+        array[i].numerator_answer = numerator_1 * denominator_2 + numerator_2 * denominator_1;
+        array[i].denominator_answer = denominator_1 * denominator_2;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        int tp_count = min(array[i].numerator_answer, array[i].denominator_answer);
+        // cout << tp_count << endl;
+        // cout << array[i].numerator_answer << " " << array[i].denominator_answer << endl;
+        for (int j = 0; j < tp_count; j++)
+        {
+            int test = tp_count - j;
+            if (array[i].numerator_answer % test == 0 && array[i].denominator_answer % test == 0)
+            {
+                array[i].numerator_answer /= test;
+                array[i].denominator_answer /= test;
+            }
+        }
+        cout << array[i].numerator_answer << " " << array[i].denominator_answer << endl;
+    }
+}
+
+
+
+
+//10-4
+#include <iostream>
+using namespace std;
+int main()
+{
+    int num_total, num_each, cin_num_x, cin_num_y, cout_num_x, cout_num_y;
+    cin >> num_total;
+    for (int i = 0; i < num_total; i++)
+    {
+        cin >> num_each;
+        cout_num_x = 0;
+        cout_num_y = 0;
+        for (int j = 0; j < num_each; j++)
+        {
+            cin >> cin_num_x >> cin_num_y;
+            cout_num_x += cin_num_x;
+            cout_num_y += cin_num_y;
+        }
+        cout << cout_num_x << " " << cout_num_y << endl;
+    }
+}
+
+
+
+//10-5
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+void swap_chars(char &a, char &b)
+{
+    char swap = a;
+    a = b;
+    b = swap;
+}
+
+void reverse_chars(char *input_word)
+{
+    swap_chars(input_word[0], input_word[3]);
+    swap_chars(input_word[1], input_word[2]);
+}
+
+void sort_chars(char *input_word)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (input_word[i] < input_word[i + 1])
+                swap_chars(input_word[i], input_word[i + 1]);
+        }
+    }
+
+    // cout << input_word << endl;
+}
+
+void change_10_to_2(char n, int *P, int *location)
+{
+    int num_of_int = (int)n;
+    int a[8];
+    // cout << num_of_int << endl;
+    for (int i = 0; i < 8; i++)
+        a[i] = 0;
+    for (int i = 0; num_of_int > 0; i++)
+    {
+        // cout << num_of_int << " " << a[i] << " ";
+        a[i] = num_of_int % 2;
+        num_of_int = num_of_int / 2;
+        // cout << num_of_int << " " << a[i] << endl;
+    }
+
+    // for (int i = 0; i < 8; i++)
+    // cout << a[i];
+    // cout << endl;
+
+    for (int i1 = 0; i1 < 8; i1++)
+    {
+        // cout << *location << " | ";
+        P[*location] = a[i1];
+        // cout << P[*location] << " || " << endl;
+        (*location)++;
+
+        // BE CARE OF ---- (*pointers)++
+    }
+}
+
+int change_to_10(char *p_chars, int *p_B32, int *location)
+{
+    int sum = 0;
+    for (int m = 0; m < 4; m++)
+    {
+        change_10_to_2(p_chars[m], p_B32, location);
+    }
+    for (int t = 0; t < 32; t++)
+    {
+        if (p_B32[t] == 1)
+            sum += pow(2, t);
+    }
+    return sum;
+}
+
+int main()
+{
+    int times_of_circulate;
+    int binary_array_location = 0;
+    char input_word[4];
+    int array[32];
+    char *p_chars = input_word;
+    int *p_B32 = array;
+    int *p_location = &binary_array_location;
+
+    cin >> times_of_circulate;
+
+    for (int i = 0; i < 32; i++)
+        array[i] = 0;
+    for (int i0 = 0; i0 < times_of_circulate; i0++)
+    {
+        cin >> input_word;
+        reverse_chars(p_chars);
+        cout << change_to_10(p_chars, p_B32, p_location) << endl;
+    }
+}
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(void)
+{
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; ++i)
+    {
+        string ert;
+        cin >> ert;
+        unsigned int asd = 0;
+        for (int j = 0; j < ert.length(); ++j)
+        {
+            asd <<= 8;
+            asd |= ert[j];
+        }
+        cout << asd << endl;
+    }
+    return 0;
+}
+
+
+
+
+//11-1
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+class coordinate
+{
+public:
+    void self_coordinate(int x1, int y1);
+    void distance(int x1, int y1);
+    void symmetry_coordinate(int x1, int y1);
+    void in_circle(int x1, int y1);
+};
+
+void switch_function(int x, int y, int function_type)
+{
+    coordinate girlfriends;   
+    switch (function_type)
+    {
+    case 1:
+        girlfriends.self_coordinate(x, y);
+        break;
+    case 2:
+        girlfriends.distance(x, y);
+        break;
+    case 3:
+        girlfriends.symmetry_coordinate(x, y);
+        break;
+    case 4:
+        girlfriends.in_circle(x, y);
+        break;
+    default:
+        break;
+    }
+}
+
+void coordinate::self_coordinate(int x1, int y1)
+{
+    std::cout << x1 << " " << y1 << std::endl;
+}
+
+void coordinate::distance(int x1, int y1)
+{
+    int x2, y2;
+    float distance_of_coordinate;
+    std::cin >> x2 >> y2;
+    distance_of_coordinate = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    std::cout << std::fixed << std::setprecision(5) << distance_of_coordinate << std::endl;
+}
+
+void coordinate::symmetry_coordinate(int x1, int y1)
+{
+    std::cout << -x1 << " " << -y1 << std::endl;
+}
+
+void coordinate::in_circle(int x1, int y1)
+{
+    int x2, y2, r;
+    std::cin >> x2 >> y2 >> r;
+    float distance_of_coordinate;
+    distance_of_coordinate = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    if (static_cast<float>(r) > distance_of_coordinate)
+        std::cout << "Yes" << std::endl;
+    else
+        std::cout << "No" << std::endl;
+}
+
+int main()
+{
+    int x, y, number_of_circulation;
+    std::cin >> x >> y;
+    std::cin >> number_of_circulation;
+    for (int i = 0; i < number_of_circulation; i++)
+    {
+        int function_type;
+        coordinate girlfriends;
+        std::cin >> function_type;
+        switch_function(x,y,function_type);
+    }
+}
+
+
+
+//11-2
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+#define pi 3.141592653589793
+using namespace std;
+
+void display_circle(int x1, int y1)
+{
+    cout << x1 << " " << y1 << endl;
+}
+
+void area_of_circle(int r1)
+{
+    double area = r1 * r1 * pi;
+    cout << fixed << setprecision(8) << area << endl;
+}
+
+void perimeter_of_circle(int r1)
+{
+    double perimeter = 2 * r1 * pi;
+    cout << fixed << setprecision(8) << perimeter << endl;
+}
+
+void whether_tangent(int x1, int y1, int r1)
+{
+    int x2, y2, r2;
+    cin >> x2 >> y2 >> r2;
+    double distance = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    if (abs(r1 - r2) == distance || abs(r1 + r2) == distance)
+        cout << "Yes" << endl;
+    else
+        cout << "No" << endl;
+}
+
+int main()
+{
+    int x, y, r, circulation_times;
+    cin >> x >> y >> r >> circulation_times;
+    for (int i = 0; i < circulation_times; i++)
+    {
+        int case_num;
+        cin >> case_num;
+        switch (case_num)
+        {
+        case 1:
+            display_circle(x, y);
+            break;
+        case 2:
+            area_of_circle(r);
+            break;
+        case 3:
+            perimeter_of_circle(r);
+            break;
+        case 4:
+            whether_tangent(x, y, r);
+            break;
+        }
+    }
+}
+
+
+
+
+//12-1
+#include <iostream>
+#include <string>
+using std::cin;
+class MyString
+{
+public:
+    MyString(const char *s_in)
+    {
+        string_in = s_in;
+    }
+    void get_length();
+    void find_string();
+
+private:
+    std::string string_in;
+};
+
+void select_function(int type, const char *string_in)
+{
+    MyString string1(string_in);
+    switch (type)
+    {
+    case 1:
+        string1.get_length();
+        break;
+    case 2:
+        string1.find_string();
+        break;
+    }
+}
+
+void MyString::get_length()
+{
+    std::cout << string_in.length() << std::endl;
+}
+void MyString::find_string()
+{
+    std::string string_key;
+    cin >> string_key;
+    if (string_in.find(string_key) != std::string::npos)
+        std::cout << string_in.find(string_key) << std::endl;
+    else
+        std::cout << -1 << std::endl;
+}
+
+int main()
+{
+    std::string s_in;
+    const char *p_char;
+    p_char = s_in.c_str();
+    int circulation;
+    cin >> s_in >> circulation;
+
+    for (int i = 0; i < circulation; i++)
+    {
+        int type;
+        cin >> type;
+        select_function(type, p_char);
+    }
+}
+
+
+
+
+// 12-2
+#include <iostream>
+#include <string>
+using namespace std;
+
+void input_informations(int num_of_students, string *name, string *id, int *score)
+{
+    for (int i = 0; i < num_of_students; i++)
+    {
+        cin >> name[i] >> id[i] >> score[i];
+    }
+}
+int select_id_out(int num_of_students, string id_selected, string *id)
+{
+    for (int i = 0; i < num_of_students; i++)
+    {
+        if (id[i] == id_selected)
+            return i;
+    }
+}
+
+void display(int id_num, string *name, string *id, int *score)
+{
+    cout << name[id_num] << " " << id[id_num] << " " << score[id_num] << endl;
+}
+
+
+void change_name(int id_num, string *name, string *id, int *score)
+{
+    string s_input;
+    cin >> s_input;
+    name[id_num] = s_input;
+}
+
+void change_score(int id_num, string *name, string *id, int *score)
+{
+    int score_input;
+    cin >> score_input;
+    score[id_num] = score_input;
+}
+
+void select_function(int type, int id_num, string *name, string *id, int *score)
+{
+    switch (type)
+    {
+    case 1:
+        display(id_num, name, id, score);
+        break;
+    case 2:
+        change_name(id_num, name, id, score);
+        break;
+    case 3:
+        change_score(id_num, name, id, score);
+        break;
+    }
+}
+
+int main()
+{
+    int num_of_students, num_of_select;
+    string name[10];
+    string id[10];
+    int score[10];
+    cin >> num_of_students;
+    input_informations(num_of_students, name, id, score);
+    cin >> num_of_select;
+    for (int i = 0; i < num_of_select; i++)
+    {
+        int type;
+        string id_selected;
+        cin >> type >> id_selected;
+        select_function(type, select_id_out(num_of_students, id_selected, id), name, id, score);
+    }
+}
+
+
+
+//13-1
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+    int a, b;
+    while (cin >> a >> b)
+    {
+        bool key = 0;
+        for (int n = a; n <= b; n++)
+        {
+            int unit = n % 10;
+            int ten = (n / 10) % 10;
+            int hund = n / 100;
+            if (n == hund * hund * hund + ten * ten * ten + unit * unit * unit)
+            {
+                key = 1;
+                cout << n << " ";
+            }
+        }
+
+        if (key ==0)
+        cout << "no" ;
+        cout << endl;
+    }
+    return 0;
+}
+
+
+
+//13-2
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int T = 0;
+    cin >> T;
+    for (int i = 0; i < T; i++)
+    {
+        int n;
+        cin >> n;
+        vector<int> V1;
+        while (n != 0)
+        {
+            V1.push_back(n % 2);
+            n = n / 2;
+        }
+        vector<int> V2(V1);
+        reverse(V2.begin(), V2.end());
+        if (V1 == V2)
+            cout << "Yes" << endl;
+        else
+            cout << "No" << endl;
+    }
+}
+
+
+
+
+//13-3
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int a = 0;
+        cin >> a;
+        long long b = pow(2, a) - 1;
+        cout << b << endl;
+    }
+}
+
+
+
+//13-4
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int attach_time(int &x0, int &y0, int x, int y)
+{
+    int time_in = static_cast<int>(sqrt((x0 - x) * (x0 - x) + (y0 - y) * (y0 - y)));
+    x0 = x;
+    y0 = y;
+    return time_in;
+}
+int attack_time(int hp, int ni)
+{
+    int time_in = 0, attack = 30;
+    if (ni > 3 && ni <= 8)
+        attack = 40;
+    if (ni > 8)
+        attack = 55;
+    time_in = hp / attack + (hp % attack > 0);
+    return time_in;
+}
+
+int main()
+{
+    int n = 0, x0 = 0, y0 = 0, sum = 0;
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        string name;
+        int hp, x, y;
+        cin >> name >> hp >> x >> y;
+        // cout << attach_time(x0, y0, x, y) << endl;
+        // cout << attack_time(hp, i) << endl;
+        sum += attach_time(x0, y0, x, y);
+        sum += attack_time(hp, i);
+    }
+    cout << sum;
+}
+
+#include <bits/stdc++.h>
+using namespace std;
+inline void read(long long &x)
+{
+    long long s = 0, w = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        if (ch == '-')
+            w = -1;
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        s = (s << 3) + (s << 1) + (ch & 15);
+        ch = getchar();
+    }
+    x = s * w;
+}
+string nam;
+long long n, now = 30, tim, hp, x, y, nowx, nowy;
+int main()
+{
+    read(n);
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> nam;
+
+        tim += (long long)(sqrt((nowx - x) * (nowx - x) + (nowy - y) * (nowy - y)));
+        nowx = x, nowy = y;
+        if (i > 3)
+            now = 40;
+        if (i > 8)
+            now = 55;
+        tim += hp / now + (hp % now > 0);
+    }
+    cout << tim << endl;
+}
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+inline void read(long long &x)
+{
+    long long s = 0, w = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+    {
+        if (ch == '-')
+            w = -1;
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+    {
+        s = (s << 3) + (s << 1) + (ch & 15);
+        ch = getchar();
+    }
+    x = s * w;
+}
+string name;
+long long n = 0, attack = 30, x0 = 0, y0 = 0, sum = 0, hp, x, y;
+int main()
+{
+
+    read(n);
+    for (int i = 0; i < n; i++)
+    {
+
+        cin >> name;
+        read(hp), read(x), read(y);
+        sum += (long long)(sqrt((x0 - x) * (x0 - x) + (y0 - y) * (y0 - y)));
+        x0 = x;
+        y0 = y;
+        if (i > 3)
+            attack = 40;
+        if (i > 8)
+            attack = 55;
+        sum += hp / attack + (hp % attack > 0);
+    }
+    cout << sum << endl;
+}

@@ -1,0 +1,27 @@
+{
+
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "opencv debuge",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Debugger/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false, //这里如果为 false，则说明调试直接运行。（反之则停止）
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,//是否调用外部cmd
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\Visual_Code\\opencv\\MinGw\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": false
+                }
+            ],
+            "preLaunchTask": "opencv3.5.2"
+        }
+    ]
+}

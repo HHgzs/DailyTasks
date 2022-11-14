@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "opencv3.5.2",
+            "command": "C:/Visual_Code/opencv/MinGw/bin/g++.exe",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/Debugger/${fileBasenameNoExtension}.exe",
+                "C:/Visual_Code/opencv/build/x64/MinGw/bin/libopencv_world452.dll",
+                "-I",
+                //"F:/opencv/build/x64/MinGw/install/include",
+                "C:/Visual_Code/opencv/build/x64/MinGw/install/include",
+                "-I",
+                //"F:/opencv/build/x64/MinGw/install/include/opencv2"
+                "C:/Visual_Code/opencv/build/x64/MinGw/install/include/opencv2"
+            ],
+            "options": {
+                "cwd": "C:/Visual_Code/opencv/MinGw/bin"
+                //这里不确定是 mingw/bin,还是mingw64、bin
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
