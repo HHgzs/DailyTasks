@@ -3,6 +3,7 @@ import requests
 url = "https://fanyi.baidu.com/sug"
 
 word = input("Enter your word: ")
+
 dic = {
     "kw": word
 }
