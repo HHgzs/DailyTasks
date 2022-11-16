@@ -18,7 +18,7 @@ obj = re.compile(r'<li>.*?<div class="item">.*?<span class="title">(?P<name>.*?)
                  r'<span>(?P<num>.*?)人评价</span>', re.S)
 # 开始匹配
 result = obj.finditer(page_content)
-f = open("data.csv", mode="w")
+f = open("crawler/Files/2.4.1data.csv", mode="w")
 csvwriter = csv.writer(f)
 for it in result:
     # print(it.group("name"))

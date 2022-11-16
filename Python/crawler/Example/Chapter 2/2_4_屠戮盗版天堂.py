@@ -25,7 +25,7 @@ for it in result1:
     result2 = obj2.finditer(ul)
     for itt in result2:
         # 拼接子页面的url地址:  域名 + 子页面地址
-        child_href = domain + itt.group('href').strip("/")
+        child_href = domain + itt.group('href').strip("/")  # 去掉首字符/
         child_href_list.append(child_href)  # 把子页面链接保存起来
 
 
