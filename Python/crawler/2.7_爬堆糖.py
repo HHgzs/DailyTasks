@@ -21,7 +21,7 @@ for i in a_list:
     src = img.get("src")
     img_resp = requests.get(src)
     img_name = src.split("/")[-1]
-    with open("crawler/Files/img/"+img_name, 'wb') as f:
+    with open("crawler/Files/img_2" + img_name, 'wb') as f:
         f.write(img_resp.content)
     print("over", img_name)
     time.sleep(1)
