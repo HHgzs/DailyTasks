@@ -4,13 +4,16 @@ import time
 
 keyword = input("Enter your keyword : ")
 main_url = "https://www.duitang.com"
+
+for i in 
+
 url = f"https://www.duitang.com/search/?kw={keyword}&type=feed"
 resp = requests.get(url)
 
 main_page = BeautifulSoup(resp.text, "html.parser")
 a_list = main_page.find_all("a", class_="a")
-for i in a_list:
-    href = i.get('href')
+for j in a_list:
+    href = j.get('href')
     # img_name = href.split("=")[-1]
     second_page_resp = requests.get(main_url + href)
     second_page_text = second_page_resp.text
