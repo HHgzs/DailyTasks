@@ -1215,12 +1215,12 @@ int main()
                 y = tmp;
             }
 
-            if (x % y == 0) //若余数为 0 则 y 为两数的最大公约数；
+            if (x % y == 0) //若余数为 0 �? y 为两数的最大公约数�?
             {
                 cout << y << endl;
                 break;
             }
-            else //若余数不为 0，则令 x = y，y = 余数，重复循环
+            else //若余数不�? 0，则�? x = y，y = 余数，重复循�?
             {
                 long long tmp = x % y;
                 x = y;
@@ -2508,4 +2508,63 @@ int main()
         sum += hp / attack + (hp % attack > 0);
     }
     cout << sum << endl;
+}
+
+
+
+
+
+
+//
+#include <iostream>
+#include <string>
+using namespace std;
+
+void swap(int &a, int &b)
+{
+    int swap_ = a;
+    a = b;
+    b = swap_;
+}
+
+void control_swap(int *arr, char mode)
+{
+    if (mode == 'N')
+    {
+        swap(arr[1], arr[5]);
+        swap(arr[1], arr[6]);
+        swap(arr[1], arr[2]);
+    }
+    else if (mode == 'S')
+    {
+        swap(arr[1], arr[2]);
+        swap(arr[1], arr[6]);
+        swap(arr[1], arr[5]);
+    }
+    else if (mode == 'E')
+    {
+        swap(arr[1], arr[3]);
+        swap(arr[1], arr[6]);
+        swap(arr[1], arr[4]);
+    }
+    else if (mode == 'W')
+    {
+        swap(arr[1], arr[4]);
+        swap(arr[1], arr[6]);
+        swap(arr[1], arr[3]);
+    }
+}
+
+int main()
+{
+    int arr[7];
+    for(int i = 1 ; i < 7; i ++)
+    cin >> arr[i];
+    string modes;
+    cin >> modes;
+    for (int i = 0; i < modes.length(); i++)
+    {
+        control_swap(arr,modes[i]);
+    }
+    cout << arr[1];
 }
