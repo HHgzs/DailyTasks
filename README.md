@@ -1,5 +1,19 @@
 # Daily-Tasks
 
+2022.11.19
+
+成功在windows下配置了OpenCV
+
+仍未实现ubuntu下的CUDA，cudnn，OpenCV配置
+
+
+
+2022.11.18
+
+学习stl知识
+
+
+
 2022.11.17
 
 Android Studio安装，准备开始前端学习

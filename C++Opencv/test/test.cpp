@@ -1,33 +1,49 @@
 
+// #include <opencv2/opencv.hpp>
+// #include <iostream>
+// #include <windows.h>
+
+// using namespace cv;
+// using namespace std;
+
+// int main()
+// {
+//     VideoCapture cap(0);
+//     Sleep(3000);
+//     Mat img;
+
+//     while (1)
+//     {
+//         cap >> img;
+//         if (img.empty())
+//             break;
+//         namedWindow("img", WINDOW_NORMAL);
+//         imshow("img", img);
+//         if (27 == waitKey(20))
+//             break;
+//     }
+
+//     return 0;
+// }
+
+
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
 using namespace cv;
 using namespace std;
 
-int main()
+int main(int argc, char **argv)
 {
-    VideoCapture cap(0);
-    Mat img;
-
-    while (1)
+    Mat src = imread("D:/test.jpg");
+    if (src.empty())
     {
-        cap >> img;
-        if (img.empty())
-            break;
-        namedWindow("img", WINDOW_NORMAL);
-        imshow("img", img);
-        if (27 == waitKey(20))
-            break;
+        printf("....\n");
+        return -1;
     }
-    int a;
-    cin >> a;
-    system("pause");
+    namedWindow("输入窗口", WINDOW_FREERATIO);
+    imshow("输入窗口", src);
+    waitKey(0);
+    destroyAllWindows();
     return 0;
 }
-
-// int main()
-// {
-//     cout << "1" ;
-//     system("pause");
-// }

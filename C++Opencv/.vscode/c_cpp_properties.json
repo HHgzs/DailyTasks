@@ -4,9 +4,7 @@
             "name": "win",
             "includePath": [
                 "${workspaceFolder}/**",
-                //"F:/opencv/build/x64/MinGw/install/include",
                 "C:/Visual_Code/opencv/build/x64/MinGw/install/include",
-                //"F:/opencv/build/x64/MinGw/install/include/opencv2"
                 "C:/Visual_Code/opencv/build/x64/MinGw/install/include/opencv2"
             ],
             "defines": [],

@@ -12,10 +12,8 @@
                 "${workspaceFolder}/Debugger/${fileBasenameNoExtension}.exe",
                 "C:/Visual_Code/opencv/build/x64/MinGw/bin/libopencv_world452.dll",
                 "-I",
-                //"F:/opencv/build/x64/MinGw/install/include",
                 "C:/Visual_Code/opencv/build/x64/MinGw/install/include",
                 "-I",
-                //"F:/opencv/build/x64/MinGw/install/include/opencv2"
                 "C:/Visual_Code/opencv/build/x64/MinGw/install/include/opencv2"
             ],
             "options": {
