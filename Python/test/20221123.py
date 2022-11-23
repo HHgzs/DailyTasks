@@ -1,0 +1,7 @@
+name1 = input("Enter the recipient's name: ")
+name2 = input("Enter the sender's name: ")
+print("*"*30)
+print(name1)
+print("     Happy Birthday to you!")
+print("         Sincely yours %s" % name2)
+print("*"*30)
