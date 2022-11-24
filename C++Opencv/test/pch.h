@@ -1,6 +1,6 @@
-#include <opencv2/opencv.hpp>
 #ifndef _PCH_H
 #define _PCH_H
+#include <opencv2/opencv.hpp>
 using namespace cv;
 
 class QuickDemo

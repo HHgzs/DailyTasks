@@ -37,6 +37,382 @@ int main(int argc, char** argv) {
 
 
 
+### Mat
+
+**Mat的简单使用**
+
+从实际出发，先看看他干啥的，怎么用。
+一般我们用到Mat有两个重要的用途：
+1.存储图像（其实图像可以看成一个高行宽列的一个矩阵）
+2.存储矩阵
+
+先来看看Mat用于图像和矩阵的最基本操作，读取一副图像，修改图像中某些像素的值，最后显示并保存，建立矩阵并进行矩阵运算
+（以下例子采用最简单的方法，基本使用默认参数）
+
+**简洁版**（如果你只想使用，而不想知道为什么、怎么改进）
+
+```cpp
+#include <iostream> //输入输出流头文件
+#include <opencv2/opencv.hpp>  //OpenCV头文件
+using namespace cv;//命名空间
+
+int main()
+{
+	///
+	1.Mat用于图像的读取、操作和存储
+	///
+
+	cv::Mat srcImage = cv::imread("D:/MyImage.jpg");	//读取
+	cv::imshow("srcImage", srcImage);	//显示
+	cv::Mat dstImage = srcImage.clone();	//赋值
+	for (size_t i = 0; i < dstImage.rows; i++)	//对元素进行操作
+	{
+		for (size_t j = 0; j < dstImage.cols; j++)
+		{
+			//直观、安全、不会有i,j溢出的危险，读取速度慢
+			dstImage.at<cv::Vec3b>(i, j)[0] *= 0.5;
+			dstImage.at<cv::Vec3b>(i, j)[1] *= 0.5;
+			dstImage.at<cv::Vec3b>(i, j)[2] = 255;
+		}
+	}
+	cv::imshow("dstImage", dstImage);	//显示结果图
+	cv::waitKey(1);	//延迟1ms，等待显示 若之后没有waitKey则显示窗口将在1ms后关闭
+	cv::imwrite("D:/dstImage.jpg", dstImage);	//保存图像
+	
+	///
+	2.Mat用于矩阵的应用，
+	///
+	//初始化
+	cv::Mat rotationMatrix = (cv::Mat_<double>(3, 3) <<
+		1.0, 2.0, 3.0,
+		0.0, 1.0, 0.0,
+		0.0, 0.0, 1.0);
+	cv::Mat A = cv::Mat::zeros(3, 3, CV_64F);	//全零矩阵
+	cv::Mat B = cv::Mat::ones(3, 3, CV_64F);	//全一矩阵
+	cv::Mat C = cv::Mat::eye(3, 3, CV_64F);	//单位矩阵
+
+	A = B + C;   //加法
+	A = B - C;   //减法
+	A = B * C;   //矩阵乘法 必须满足矩阵相乘的行列数对应规则
+	A = 5 * B;   //标量乘法 每个元素扩大5倍
+	A = B.t();   //B转置
+	A = B.inv(); //B逆矩阵
+	//以上是最基本的操作，矩阵运算远远不是这几种，Mat包含了几乎所有的操作，用到的时候再查吧
+	std::cout<<"A:"<<A<<std::endl;
+	cv::waitKey(0); //当参数为0时 一直等待，为了显示窗口一直显示
+	return 1;
+}
+```
+
+**进阶版**（如果你想采用最适合的方法）
+
+```cpp
+//输入输出流头文件
+#include <iostream> 
+//头文件  opencv.hpp中包含基本的头文件 （我们采用的OpenCV版本是 2.4.13.6）
+#include <opencv2/opencv.hpp>  
+
+//命名空间，指明在cv下的所有类名、参数名、函数名等能够在不加 cv::下就能够使用
+using namespace cv;
+
+int main() 
+{
+	///
+	1.Mat用于图像的读取、操作和存储
+	///
+	//创建一个Mat类型对象 image (以下出现的"cv::",如果添加了 using namespace cv；就可以省略)
+	cv::Mat srcImage;
+	
+	//通过绝对路径读取一副BGR彩色图像，参数1是图像的绝对路径(注意:路径可采用"\\"或"/" 不能使用windows文件夹路径的"\");
+	srcImage = cv::imread("D:/MyImage.jpg");
+	
+	//先显示image这个图像 参数1是显示窗口名称,参数2是Mat类型的对象;
+	cv::imshow("srcImage", srcImage);
+	
+	//创建一个Mat类型对象 dstImage，
+	//且分配给他一个srcImage.rows行，srcImage.cols列的空间，
+	//数据类型是CV_8UC3，即3通道（C3）8bit的无符号整型（8U，uchar）
+	//且将所有元素内所有通道值置0，Scalar::all(0)，这里修改"0"位置的值可得到你想要的值得矩阵
+	//你也可以使用zeros函数达到全赋值为0效果;
+	//cv::Mat dstImage = cv::Mat::zeros(srcImage.rows, srcImage.cols, CV_8UC3);
+	//当然，因为我们之后要将srcImage给dstImage 所以此处直接使用 cv::Mat dstImage; 即可。
+	cv::Mat dstImage(srcImage.rows,srcImage.cols,CV_8UC3,cv::Scalar::all(0));
+	
+	//将一个Mat A赋值给另一个Mat B，有四种方法
+	//1.构造函数法         Mat A(B);
+	//2.重载运算符法       A = B;
+	//3.复制法            A.copyTo(B);
+	//4.克隆法            B=A.clone();
+
+	//这里需要知道一个Mat类的概念：
+	//Mat 是一个类，由两个数据部分组成：矩阵头（包含矩阵尺寸，存储方法，存储地址等信息）
+	//和一个指向存储所有像素值的矩阵（根据所选存储方法的不同矩阵可以是不同的维数）的指针。
+
+	//方法1、2是浅拷贝（时间短，不安全），只拷贝矩阵头，不拷贝数据部分，A和B共用一块数据，A对元素的操作会影响B ；
+	//方法3、4是深拷贝（时间长，相对安全），拷贝矩阵的所有数据，包括矩阵头，区别在于clone()会给目标矩阵重新分配新地址，
+	//而copyTo()不会,copyTo()只是修改目标矩阵内的元素的值与当前矩阵值相同
+	dstImage = srcImage.clone();
+	
+	//两层循环访问所有元素通道值，并将其中蓝色通道（B）减小一半，绿通道（G）值减小一半，红色通道（R）置255
+	for (size_t i = 0; i < dstImage.rows; i++)
+	{//外层循环行数
+		for (size_t j = 0; j < dstImage.cols; j++)
+		{//内层循环列数
+		
+			采用这种直观的方式，这种方法更安全不会有i,j溢出的危险，但是读取速度慢
+			例如 图像为640x480分辨率，i，j取482、642改方法将会报错，但使用prt方法则一样会计算，不报错。
+			//dstImage.at<cv::Vec3b>(i, j)[0] *= 0.5;
+			//dstImage.at<cv::Vec3b>(i, j)[1] *= 0.5;
+			//dstImage.at<cv::Vec3b>(i, j)[2] = 255;
+			
+			//ptr OpenCV中使用的智能指针，<>内是图像元素的类型 Vec3b 是一个包含三个uchar类型元素的一维数组
+			//(i)[j][0]分别代表数据的行号、列号、和通道号,如果是单通道则(i)[j]即可，
+			//由于opencv默认读取彩色图像是BGR，则0为蓝色、1为绿、2为红
+			//uchar 能存储0~255的值 都为零则为黑色 都为255则为白色
+			dstImage.ptr<cv::Vec3b>(i)[j][0] *= 0.5;
+			dstImage.ptr<cv::Vec3b>(i)[j][1] *= 0.5;
+			dstImage.ptr<cv::Vec3b>(i)[j][2] = 255;
+		}
+	}
+	
+	//创建一个名为dstImage的窗口用来显示图像，如果显示结束可通cv::destroyWindow("dstImage");进行指定销毁，
+	//也可通过cv::destroyAllWindows();销毁存在的所有窗口。
+	cv::namedWindow("dstImage");
+	
+	//显示结果图到名为dstImage的窗口中
+	cv::imshow("dstImage", dstImage);
+
+	//保存图像到某一地址，参数1.要保存的绝对路径和文件名，参数2.要保存的Mat图像
+	cv::imwrite("D:/dstImage.jpg", dstImage);
+
+	//延迟1ms秒时间等待键盘输入,如果参数为0则一直等待。在imshow之后，
+	//如果没有waitKey语句则不会显示图像,若之后没有waitKey()则显示窗口将在1ms后关闭。
+	cv::waitKey(1);	
+
+	///
+	2.Mat用于矩阵的应用，
+	///
+	//创建一个矩阵
+	cv::Mat rotationMatrix;
+	
+	//给矩阵赋值，矩阵行列很小时，用这种方法直观、方便
+	rotationMatrix = ( cv::Mat_<double>(3, 3) <<
+						1.0, 2.0, 3.0,
+						0.0, 1.0, 0.0,
+						0.0, 0.0, 1.0);
+						
+	//如果是全零矩阵，可以如下进行初始化 当然 行、列和数据类型自己选择
+	cv::Mat A = cv::Mat::zeros(3, 3, CV_64F);
+	//如果是全一矩阵，可以如下进行初始化 当然 行、列和数据类型自己选择
+	cv::Mat B = cv::Mat::ones(3, 3, CV_64F);
+	//如果是单位矩阵，可以如下进行初始化 当然 行、列和数据类型自己选择
+	cv::Mat C = cv::Mat::eye(3, 3, CV_64F);
+
+	A = B + C; //加法
+	A = B - C; //减法
+	A = B * C; //矩阵乘法  必须满足矩阵相乘的行列数对应规则
+	A = 5 * B; //标量乘法 每个元素扩大5倍
+	A = B.t(); //B转置
+	A = B.inv(); //B逆矩阵
+
+	//以上是最基本的操作，矩阵运算远远不是这几种，Mat包含了几乎所有的操作，用到的时候再查吧
+	
+	//如果包含了c++输入输出流的头文件 #include <iostream> 那么Mat可输出至屏幕通过
+	std::cout<<" A is : "<< A <<std::endl;
+	
+	//一直等待，以显示图像窗口
+	cv::waitKey(0);
+	cv::destroyAllWindows();	
+	return 1;
+}
+```
+
+
+
+
+
+**Mat的结构**
+
+[OpenCV](https://so.csdn.net/so/search?q=OpenCV&spm=1001.2101.3001.7020)里数据的基本存储类型，意思是矩阵（Matrix）。因为数字图像可以看成矩阵，所以Mat不仅可以存储矩阵，更重要的他是图像的载体。一个Mat分为，Mat头和Mat数据两部分。Mat头部分大小是固定的，包含矩阵的大小，存储的方式，矩阵存储的地址等等，数据部分是一个指向矩阵包含像素值的指针（data）。
+
+
+
+**头文件**
+
+core.hpp 目前使用只要包含 opencv.hpp 即可，opencv.hpp包含了常用的头文件。
+
+**命名空间**
+
+cv
+1.可以在包含头文件后添加 “using namespace cv；”之后代码可直接使用 Mat 类；
+2.在不适用 “using namespace cv; ” ，在每次使用 Mat 都需使用cv命名空间，如，cv::Mat 。
+（我习惯在使用时添加cv，这样的好处是在使用多个库编写程序时，不至于出现相同类名或方法名重名的状况，并且代码更加直观。）
+
+
+
+
+
+#### **常用参数**
+
+| 参数     | 类型   | 描述                                                         |
+| -------- | ------ | ------------------------------------------------------------ |
+| flags    | int    | Mat中的一些标记，一共32位，从低位到高位，包含了数据类型（0-2位）、通道数（3-11）等等， 具体请参考[【OpenCV】从Mat的flags中可以读到的信息，以及相关宏定义](https://blog.csdn.net/yiyuehuan/article/details/43701797) |
+| data     | uchar* | 指向数据的指针                                               |
+| dims     | int    | 矩阵的维度                                                   |
+| rows     | int    | 矩阵行数 维度大于2 则rows = -1                               |
+| cols     | int    | 矩阵列数 维度大于2 则cols = -1                               |
+| size     | MSize  | 数据内是一维数组，有个两元素，size[0]矩阵的行数，size[1]矩阵的列数 |
+| step     | MStep  | 数据内是一维数组，有个两元素，step[0]矩阵一行共多少字节，step[1]表示矩阵一个元素多少字节 |
+| refcount | int*   | 矩阵数据的引用次数，浅拷贝得到的矩阵同步这个参数，同时增加或减少，可以用来判断有多少矩阵使用该矩阵的数据内容 |
+
+**channels()** 通道数，矩阵每个像素可以存储一个数组，通道数是数组中元素的个数，常见的彩色图像，每个像素存蓝、绿、红（BGR）三个颜色，其channels = 3。
+
+**type()** 表示了矩阵中元素的类型以及矩阵的通道个数，它是一系列的预定义的常量，其命名规则为CV_(位数）+（数据类型）+（通道数）。例如 CV_8UC1
+
+**depth()** 矩阵中元素的一个通道的数据类型，这个值和type是相关的。例如 type为 CV_16SC2，一个2通道的16位的有符号整数。那么，depth则是CV_16S。depth也是一系列的预定义值，将type的预定义值去掉通道信息就是depth值:
+CV_8U CV_8S CV_16U CV_16S CV_32S CV_32F CV_64F
+
+
+
+
+
+**类型 type**
+
+Mat中每个元素可以是单通道、三通道、多通道等等，其存储的数据类型也可能是char、uchar、short、ing、float、double等等。Mat对于这些类型进行了定义，即type，可以调用type()函数来返回当前Mat的类型。它是一系列的预定义的常量，表示了矩阵中元素的类型以及矩阵的通道个数，其命名规则为CV_(位数）+（数据类型）+（通道数）。具体的有以下值：
+
+| type                         | 数据类型 |
+| ---------------------------- | -------- |
+| CV_8UC1、CV_8UC2、CV_8UC3    | uchar    |
+| CV_8SC1、CV_8SC2、CV_8SC3    | char     |
+| CV_16UC1、CV_16UC2、CV_16UC3 | ushort   |
+| CV_16SC1、CV_16SC2、CV_16SC3 | short    |
+| CV_32SC1、CV_32SC2、CV_32SC3 | int      |
+| CV_32FC1、CV_32FC2、CV_32FC3 | float    |
+| CV_64FC1、CV_64FC2、CV_64FC3 | double   |
+
+
+
+**构造函数**
+
+**1. Mat()**
+无参构造方法无参构造方法；
+
+**2. Mat(int rows, int cols, int type)**
+创建行数为 rows，列数为 col，类型为 type 的图像；
+
+**3. Mat(Size size, int type)**
+创建大小为 size，类型为 type 的图像；
+
+**4. Mat(int rows, int cols, int type, const Scalar& s)**
+创建行数为 rows，列数为 col，类型为 type 的图像，并将所有元素初始化为值 s；
+
+**5. Mat(Size size, int type, const Scalar& s)**
+创建大小为 size，类型为 type 的图像，并将所有元素初始化为值 s；
+
+**6. Mat(const Mat& m)**
+将m赋值给新创建的对象，此处不会对图像数据进行复制，m和新对象共用图像数据，属于浅拷贝；
+
+**7. Mat(int rows, int cols, int type, void\* data, size_t step=AUTO_STEP)**
+创建行数为rows，列数为col，类型为type的图像，此构造函数不创建图像数据所需内存，而是直接使用data所指内存，图像的行步长由 step指定。
+
+**8. Mat(Size size, int type, void\* data, size_t step=AUTO_STEP)**
+创建大小为size，类型为type的图像，此构造函数不创建图像数据所需内存，而是直接使用data所指内存，图像的行步长由step指定。
+
+**9. Mat(const Mat& m, const Range& rowRange, const Range& colRange)**
+创建的新图像为m的一部分，具体的范围由rowRange和colRange指定，此构造函数也不进行图像数据的复制操作，新图像与m共用图像数据；
+
+**10. Mat::Mat(const Mat& m, const Rect& roi)**
+创建的新图像为m的一部分，具体的范围roi指定，此构造函数也不进行图像数据的复制操作，新图像与m共用图像数据。
+
+------
+
+构造函数原文：[浅谈Opencv Mat类（常用构造函数和成员函数整理）](https://blog.csdn.net/qq_37406130/article/details/78725406)
+
+**赋值**
+
+将一个Mat A赋值给另一个Mat B，有四种方法
+1. 构造函数法    Mat A(B);
+2. 重载运算符法   A = B;
+3. 复制法     A.copyTo(B);
+4. 克隆法     B=A.clone();
+
+方法1、2是浅拷贝（时间短，不安全），只拷贝矩阵头，不拷贝数据部分，A和B共用一块数据，A对元素的操作会影响B。
+方法3、4是深拷贝（时间长，相对安全），拷贝矩阵的所有数据，包括矩阵头，最大的区别在于clone()会给目标矩阵重新分配新地址，而copyTo()不会,copyTo()只是修改目标矩阵内的元素的值与当前矩阵值相同
+
+**数据操作**
+
+前面代码里也提到了，一般采用两种操作，1.使用at函数，2.使用prt函数。当然Mat对于数据的操作有很多方法，而我觉得这两种是最具有代表性的。
+以一个数据类型为三通道无符号整型（uchar）的Mat A为例，即type为CV_8UC3。读取其中第一个通道的方法是：
+`1. A.at<Vec3b>(i, j)[0]; 这里 A.at() 返回对指定数组元素的引用，这种方法会检查i，j是否越界相比较来说比较安全，但是速度相对慢一些。`
+`2. A.ptr<Vec3b>(i)[j][0]; 这里 A.ptr() 返回指定矩阵行的指针，既然是指针，当发生越界的时候也不会出错而继续进行，这有可能修改别的数据，相比来说没那么安全，但是速度很快。`
+
+#### 常用函数
+
+```cpp
+分配新的阵列数据
+void Mat::create(int rows, int cols, int type)
+
+如果数组有没有 elemens，则返回 true。
+bool Mat::empty()
+
+返回一个矩阵元素的类型
+int Mat::type()
+
+返回一个矩阵元素的深度
+int Mat::depth()
+
+返回通道数
+int Mat::channels()
+
+克隆
+Mat Mat::clone()
+
+把矩阵复制到另一个矩阵中
+void Mat::copyTo(OutputArray m)
+
+在缩放或不缩放的情况下转换为另一种数据类型
+void Mat::convertTo(OutputArray m,int rtype,double alpha=1,double beta=0)
+
+将阵列中所有的或部分的元素设置为指定的值
+Mat& Mat::setTo(const Scalar& s, InputArray mask=noArray())
+
+在无需复制数据的前提下改变2D矩阵的形状和通道数或其中之一
+Mat Mat::reshape(int cn, int rows=0)
+
+计算3元素向量的一个叉乘积
+Mat Mat::cross(InputArray m)
+
+更改矩阵的行数。
+void Mat::resize(size_t sz)
+
+返回数组元素的总数
+size_t Mat::total()
+
+返回矩阵元素大小 （以字节为单位）该方法返回以字节为单位的矩阵元素大小。
+例如，如果矩阵类型是 CV_16SC3，该方法返回3*sizeof(short)或 6
+size_t Mat::elemSize()
+
+该方法通过矩阵表达式（matrix expression）实现矩阵的转置
+The method performs matrix transposition by means of matrix expressions. 
+它并未真正完成了转置但却返回一个临时的可以进一步用在更复杂的
+矩阵表达式中或赋给一个矩阵的转置矩阵对象
+MatExpr Mat::t()
+
+该方法执行矩阵的反转矩阵表达。这意味着该方法返回一个临时矩阵反转对象并可进一步用于更复杂的
+矩阵表达式的中或分配给一个矩阵。
+DECOMP_LU是 LU 分解一定不能是单数的
+DECOMP_CHOLESKY 是 Cholesky LLT只适用于对称正矩阵的分解。
+该类型在处理大的矩阵时的速度是LU的两倍左右。
+DECOMP_SVD是 SVD 分解。如果矩阵是单数或甚至不是2维，函数就会计算伪反转矩阵
+MatExpr Mat::inv(int method=DECOMP_LU)
+```
+
+
+
+
+
+
+
 ## 2、图像色彩空间转换
 
 **所使用的API接口：**
@@ -100,6 +476,8 @@ int main(int argc, char** argv) {
 }
 
 ```
+
+
 
 
 
@@ -192,15 +570,11 @@ void main()
 > Scalar upper = Scalar(hmax, smax,vmax);
 > inRange(imgHSV, lower, upper, mask);
 
-
-
 **五、Scalar 初始化的格式**
 
 - Scalar(hmin, smin, vmin);
 - Scalar lower = { hmin, smin, vmin}；
 - Scalar lower = (hmin, smin, vmin)：错误
-
-
 
 
 
@@ -256,8 +630,155 @@ void QuickDemo::pixel_visit_Demo(Mat &image) {
 	imshow("像素演示", image);
 	waitKey(0);
 }
-
 ```
+
+
+
+### .at<  >(  )
+
+```cpp
+if (dims == 1)//单通道
+{
+	int pv = image.at<uchar>(row, col);
+	//读取为uchar类型(0-255 八位) 
+	//转成int类型赋值给 pv  image.at
+	image.at<uchar>(row, col) = 255 - pv;
+}//遍历灰度图像并取反色图
+1234567
+```
+
+```cpp
+if (dims==3)
+{
+	Vec3b bgr=image.at<Vec3b>(row, col);//读取每个像素点的三个值bgr[0],bgr[1],bgr[2],赋值给bgr  可以用picture2.at<Vec3b>(i,j)[c]
+	//给当前RGB色彩空间的像素三个颜色通道取反值
+	image.at<Vec3b>(row, col)[0]=255-bgr[0];
+	//像素 b通道 255-bgr[]:取图像反色
+	image.at<Vec3b>(row, col)[1] = 255 - bgr[1];
+	//像素 g通道
+	image.at<Vec3b>(row, col)[2] = 255 - bgr[2];
+	//像素 r通道
+}//遍历彩色图像并取反色图
+```
+
+
+
+先扩展一下访问像素的 .at 的用法：
+
+​     cv::mat的成员函数： .at(int y， int x)可以用来存取图像中对应坐标为（x，y）的元素坐标。但是在使用它时要注意，在编译期必须要已知图像的数据类型，这是因为cv::mat可以存放任意数据类型的元素。因此at方法的实现是用模板函数来实现的。假设提前已知一幅图像img的数据类型为 unsigned char型灰度图（单通道），要对坐标为(14,25)的像素重新赋值为25,则对应操作如下：
+
+```cpp
+srcImage.at<uchar>(14,25) = 25;
+```
+
+​     如果要操作的图片img是一幅数据类型同样为unsigned char的彩色图片，再次要求将坐标（14,25）的像素赋值为25。这个操作跟上面的就有点区别了，需要对这个像素三个通道的每个对应元素赋值,Opencv中图像三原色在内存中的排列顺序为B-G-R（见下面注释），操作过程如下：
+
+```cpp
+img.at<Vec3b>(14,25) [0]= 25;//B  
+img.at< Vec3b >(14,25) [1]= 25;//G  
+img.at< Vec3b >(14,25 [2]= 25;//R  
+```
+
+一个简单小程序：
+
+```cpp
+#include <opencv2/opencv.hpp>
+#include <iostream>
+using namespace cv;
+using namespace std;
+int main()
+{
+	Mat m(3, 3, CV_8UC3);//建立一个三行三列3通道像素
+	Vec3b p;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			p[0] = i;
+			p[1] = j;
+			p[2] = i+j;
+			m.at<Vec3b>(i,j) = p;
+		}
+	}
+	cout <<"数组:"<<endl<<"M= " << m << endl;
+	int a = m.at<Vec3b>(2, 2)[2];
+	Vec3b b = m.at<Vec3b>(2, 2)[2];
+	cout << "访问一个数：" << a <<endl<<"访问三通道："<<b<<endl;
+	waitKey(0);
+	return 0;
+}
+```
+
+
+
+
+
+#### uchar
+
+uchar是无符号的字符类型，数值范围为0～255,在图像处理中表示像素值范围时用的多
+
+#### Vec3b
+
+表示每一个Vec3b对象中,存储3个char字符型数据,可以去存储RGB图像中的一个像素点
+例1
+描述一种RGB颜色：
+
+```cpp
+Vec3b color;
+color[0]=0;//B分量
+color[1]=0;//G分量
+color[2]=255;//R分量
+```
+
+1.文件包含:     
+
+​           首先在程序开头处加上#include<vector>以包含所需要的类文件vector,还有一定要加上using namespace std;
+
+2.声明一个int向量以替代一维的数组:vector <int> a;(等于声明了一个int数组a[],大小没有指定,可以动态的向里面添加删除。
+
+比如Vec<uchar, 3>：
+其实这句就是定义一个uchar类型的数组，长度为3而已，例如 8U 类型的 RGB 彩色图像可以使用 <Vec3b>，3 通道 float 类型的矩阵可以使用 <Vec3f>。对于 Vec 对象，可以使用[]符号如操作数组般读写其元素，如：Vec3b color; //用 color 变量描述一种 RGB 颜色
+color[0]=255; //0通道的B 分量
+color[1]=0; //1通道的G 分量
+color[2]=0; //2通道的R 分量
+
+
+
+### .ptr<  >()
+
+**返回指定位置的指针**
+
+```cpp
+//定义
+_Tp* Mat::ptr(int y)
+{
+    CV_DbgAssert( y == 0 || (data && dims >= 1 && (unsigned)y < (unsigned)size.p[0]) );
+    return (_Tp*)(data + step.p[0] * y);
+}
+123456
+```
+
+例4
+
+```cpp
+//指针类型为 uchar
+uchar* current_row = image.ptr<uchar>(row);
+//指向第row行的第一个元素
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -299,8 +820,6 @@ void QuickDemo::operators_demo(Mat &image) {
 
 	imshow("dst", dst);
 }
-
-123456789101112131415161718192021222324252627
 ```
 
 
