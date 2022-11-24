@@ -2,7 +2,7 @@
 
 
 
-## 1、图像的读取与显示
+## 01图像的读取与显示
 
 **所使用的API接口：**
 
@@ -409,11 +409,25 @@ MatExpr Mat::inv(int method=DECOMP_LU)
 
 
 
+### Waitkey()
+
+Waitkey在你加载图片时必须使用，否则就会一闪而过；
+当x>0，waitkey返回在x时间内按下的按键的ASCII值，否则返回-1；
+当x=0，waitkey表示永久等待，直到有键按下；
 
 
 
 
-## 2、图像色彩空间转换
+
+
+
+
+
+
+
+
+
+## 02图像色彩空间转换
 
 **所使用的API接口：**
 
@@ -481,7 +495,7 @@ int main(int argc, char** argv) {
 
 
 
-## 3、图像对象的创建与赋值
+## 03图像对象的创建与赋值
 
 **所使用的API接口**：
 
@@ -580,7 +594,7 @@ void main()
 
 
 
-## 4、像素的读写操作
+## 04像素的读写操作
 
 **所使用的API接口：**
 
@@ -782,7 +796,7 @@ uchar* current_row = image.ptr<uchar>(row);
 
 
 
-## 5、像素的算术操作
+## 05像素的算术操作
 
 **所使用的API接口：**
 
@@ -824,7 +838,45 @@ void QuickDemo::operators_demo(Mat &image) {
 
 
 
-## 6、滚动条调整图像亮度与对比度
+
+
+### saturate_cast<  >(  )
+
+saturate_cast<uchar>主要是为了防止颜色溢出操作
+
+```cpp
+原理大致如下
+if(data<0) 
+    data=0; 
+else if(data>255) 
+    data=255;
+```
+
+比如我们对像素进行线性操作。
+
+ **使用saturate_cast<uchar>**
+
+```cpp
+	//三个for循环，执行运算 g_dstImage(i,j) =a*g_srcImage(i,j) + b
+	for (int y = 0; y < g_srcImage.rows; y++)
+	{
+		for (int x = 0; x < g_srcImage.cols; x++)
+		{
+			for (int c = 0; c < 3; c++)
+			{
+				g_dstImage.at<Vec3b>(y, x)[c] = saturate_cast<uchar>((g_nContrastValue*0.01)*(g_srcImage.at<Vec3b>(y, x)[c]) + g_nBrightValue);
+			}
+		}
+	}
+```
+
+
+
+
+
+
+
+## 06滚动条调整图像亮度与对比度
 
 **所使用的API接口：**
 
@@ -860,17 +912,147 @@ void QuickDemo::tracking_bar_demo(Mat &image) {
 	createTrackbar("contrast_bar:", "亮度与对比度调整", &contrast_value, 200, on_contrast, (void*)(&image));
 	on_lightness(50, &image);
 }
-
-123456789101112131415161718192021222324252627
 ```
+
+
+
+
+
+### addWeighted(）
+
+**功能说明：**
+
+addWeighted（）函数是将两张相同大小，相同类型的图片融合的函数。他可以实现图片的特效，不多说了，直接上图。
+
+**API详解：**
+
+void cvAddWeighted( const CvArr* src1, double alpha,const CvArr* src2, double beta,double gamma, CvArr* dst );
+参数1：src1，第一个原数组.
+参数2：alpha，第一个数组元素权重
+
+参数3：src2第二个原数组
+参数4：beta，第二个数组元素权重
+参数5：gamma，图1与图2作和后添加的数值。不要太大，不然图片一片白。总和等于255以上就是纯白色了。
+
+参数6：dst，输出图片
+
+**代码展示：**
+
+```cpp
+#include <opencv2/opencv.hpp>
+#include <iostream>
+using namespace std;
+using namespace cv;
+int main()
+{
+	Mat src1,src2,dst;//创建Mat数组，等待存储图片
+	src1 = imread("1.jpg");
+	src2 = imread("2.jpg");
+	//将图1与图2线性混合
+	addWeighted(src1,0.5,src2,0.7,3,dst);
+	/*注释
+	参数分别为：图1，图1的权重，图2，图2的权重，权重和添加的值为3，输出图片src
+	*/
+	//显示图片
+	imshow("src1图",src1);
+	imshow("src2图",src2);
+	imshow("混合后的图片",dst);
+	waitKey(0);//等待按键响应后退出，0改为5000就是5秒后自动退出。
+	return 0;
+}
+```
+
+
+
+
+
+
+
+### createTrackbar(  )
+
+createTrackbar()函数原型如下
+
+```cpp
+int createTrackbar( const String & trackbarname,//滑动条名称
+                    const String & winname,//所在窗口名称
+                    int * value,//value为指向int的指针，用于返回滑动条当前值
+                    int count,//滑动条条最大值，默认值最小为0
+                    TrackbarCallback on_Change = 0，//回调函数
+                    void * userdata = 0 //用户创给回调函数的数据，用于处理轨迹事件，默认值为0
+                   )
+```
+
+
+
+利用滑动条调节两张同样大小的图片线性混合示例：
+
+```cpp
+//滑动条的创建和使用
+#include<opencv2/opencv.hpp>
+#include "opencv2/highgui/highgui.hpp"
+using namespace cv;
+#define WINDOW_NAME "【线性混合示例】"//为窗口名称定义的宏
+
+const int g_nMaxAlphaValue = 100; //Alpha的最大值
+int g_nAlphaValueSlider;//滑动条对应的变量（global，int）
+double g_dAlphaValue;//声明当前Alpha相对于最大值所占比例变量（global，double）
+double g_dBetaValue;//当前Beta相对于最大值所占比例
+Mat	g_srcImage1;//声明存储图像的变量
+Mat g_srcImage2;
+Mat g_dstImage;//声明混合图像变量
+
+void on_Trackbar(int, void*)//响应滑动条的回调函数
+{
+	g_dAlphaValue = double(g_nAlphaValueSlider) / g_nMaxAlphaValue; //当前Alpha相对于最大值所占比例（global，double）
+	g_dBetaValue = (1.0 - g_dAlphaValue); //当前Beta相对于最大值所占比例（global，double）
+	addWeighted(g_srcImage1, g_dAlphaValue, g_srcImage2, g_dBetaValue, 0, g_dstImage);//图像的叠加
+	imshow(WINDOW_NAME, g_dstImage);//在指定窗口显示图像
+}
+
+int main(int argc, char * * argv[])//argc 命令行参数个数，argv
+{
+	g_srcImage1 = imread("333.jpg");//载入第一幅图
+	g_srcImage2 = imread("111.jpg");//载入第二幅图
+	if(!g_srcImage1.data)
+	{
+		std::cout << "读取第一幅图片错误，请确定工程目录下是存在imread读取的图片！";
+		return -1;
+	}
+	if(!g_srcImage2.data)
+	{
+		std::cout << "读取第一幅图片错误，请确定工程目录下是f否存在imread读取的图片！";
+		return -1;
+	}
+	g_nAlphaValueSlider = 50;//设置滑条初值为50
+	namedWindow(WINDOW_NAME);
+	char TrackbarName[50];//声明滑动条的名称存储变量
+	sprintf(TrackbarName, "透明度%d", g_nMaxAlphaValue);
+	createTrackbar(TrackbarName, WINDOW_NAME, &g_nAlphaValueSlider, g_nMaxAlphaValue, on_Trackbar);//创建滑动条
+	//TrackbarName：滑动条的名字
+	//WINDOW_NAME：窗口名称
+	//&g_nAlphaValueSlider ：滑块当前位置的值，（将g_nAlphaValueSlider的地址返回给指针）
+	// g_nMaxAlphaValue：滑动条的最大值
+	//on_Trackbar:回调函数名，用于显示混合图像
+	//此处使用函数名on_Trackbar，函数名相当于指向该函数地址的指针
+	on_Trackbar(g_nAlphaValueSlider,0);//结果在回调函数中显示
+	waitKey(0);
+	return 0;
+}
+```
+
+
+
+
+
+
+
+
 
 
 
 ## 7、键盘响应
 
-**所使用的API接口：**
 
-- 略
 
 **代码演示：**
 
@@ -898,8 +1080,11 @@ void QuickDemo::key_demo(Mat &image) {
 		imshow("键盘响应", dst);
 	}
 }
-1234567891011121314151617181920212223
 ```
+
+
+
+
 
 
 
