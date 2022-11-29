@@ -13,7 +13,7 @@
 **代码演示：**
 
 ```cpp
-#include<pch.h>
+#include <pch.h>
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
@@ -32,7 +32,6 @@ int main(int argc, char** argv) {
 	destroyAllWindows();
 	return 0;
 }
-
 ```
 
 
@@ -409,6 +408,198 @@ MatExpr Mat::inv(int method=DECOMP_LU)
 
 
 
+
+
+
+
+### **imread(  )**
+
+
+
+**imread函数作用**
+
+imread函数的作用非常简单，从函数的名称也可以看出来，imread为image read的缩写，即图像读取的意思，。那么imread函数的作用就很明显了，负责读取图像。其实学过[matlab](https://so.csdn.net/so/search?q=matlab&spm=1001.2101.3001.7020)的同学就会知道，matlab中也有一个读取图像的函数也命名为imread，这是opencv借鉴了matlab而命名的，因为在opencv1.x时代，加载图像的函数并不叫imread,二是由cvLoadImage函数负责。
+
+
+
+**imread函数原型**
+
+话不多说，先了解imread函数的原型，从[opencv](https://so.csdn.net/so/search?q=opencv&spm=1001.2101.3001.7020)的最新document可以查阅到imread原型为
+
+imread c++原型
+
+```cpp
+#include <opencv2/imgcodecs.hpp>
+Mat cv::imread  (   const String &  filename,
+int     flags = IMREAD_COLOR 
+)       
+```
+
+imread python原型
+
+```python
+Python:
+retval  =   cv.imread(  filename[, flags]   )
+```
+
+可以看到，imread函数原型非常简单，可以总结为三点
+
+- 返回值,Mat 类型， 即返回读取的图像，读取图像失败时返回一个空的矩阵对象（Mat::data == NULL)
+- 参数1 filename, 读取的图片文件名，可以使用相对路径或者绝对路径，但必须带完整的文件扩展名（图片格式后缀）
+- 参数2 flags, 一个读取标记，用于选择读取图片的方式，默认值为IMREAD_COLOR，flag值的设定与用什么颜色格式读取图片有关
+
+**参数1 补充：**
+
+imread函数支持读取的图像格式有
+
+- Windows bitmaps - *.bmp,* .dib (always supported)
+- JPEG files - *.jpeg,* .jpg, *.jpe (see the Note section)
+- JPEG 2000 files - *.jp2 (see the Note section)
+- Portable Network Graphics - *.png (see the Note section)
+- WebP - *.webp (see the Note section)
+- Portable image format - *.pbm,* .pgm, *.ppm* .pxm, *.pnm (always supported)
+- PFM files - *.pfm (see the Note section)
+- Sun rasters - *.sr,* .ras (always supported)
+- TIFF files - *.tiff,* .tif (see the Note section)
+- OpenEXR Image files - *.exr (see the Note section)
+- Radiance HDR - *.hdr,* .pic (always supported)
+- Raster and Vector geospatial data supported by GDAL (see the Note section)
+  Note
+
+**参数2 补充：**
+
+这些flags值被定义在enum cv::ImreadModes枚举类里面
+
+| c++定义                    | python定义                            | 说明                                                         |
+| :------------------------- | :------------------------------------ | :----------------------------------------------------------- |
+| IMREAD_UNCHANGED           | Python: cv.IMREAD_UNCHANGED           | 如果设置，则按原样返回加载的图像（使用Alpha通道，否则会被裁剪） |
+| IMREAD_GRAYSCALE           | Python: cv.IMREAD_GRAYSCALE           | 如果设置，则始终将图像转换为单通道灰度图像（编解码器内部转换）。 |
+| IMREAD_COLOR               | Python: cv.IMREAD_COLOR               | 如果设置，请始终将图像转换为3通道BGR彩色图像。               |
+| IMREAD_ANYDEPTH            | Python: cv.IMREAD_ANYDEPTH            | 如果设置，则在输入具有相应深度时返回16位/ 32位图像，否则将其转换为8位。 |
+| IMREAD_ANYCOLOR            | Python: cv.IMREAD_ANYCOLOR            | 如果设置，则以任何可能的颜色格式读取图像。                   |
+| IMREAD_LOAD_GDAL           | Python: cv.IMREAD_LOAD_GDAL           | 如果设置，使用gdal驱动程序加载图像                           |
+| IMREAD_REDUCED_GRAYSCALE_2 | Python: cv.IMREAD_REDUCED_GRAYSCALE_2 | 如果设置，则始终将图像转换为单通道灰度图像，图像尺寸减小1/2。 |
+| IMREAD_REDUCED_COLOR_2     | Python: cv.IMREAD_REDUCED_COLOR_2     | 如果设置，则始终将图像转换为3通道BGR彩色图像，图像尺寸减小1/2。 |
+| IMREAD_REDUCED_GRAYSCALE_4 | Python: cv.IMREAD_REDUCED_GRAYSCALE_4 | 如果设置，则始终将图像转换为单通道灰度图像，图像尺寸减小1/4  |
+| IMREAD_REDUCED_COLOR_4     | Python: cv.IMREAD_REDUCED_COLOR_4     | 如果设置，则始终将图像转换为3通道BGR彩色图像，图像尺寸减小1/4 |
+| IMREAD_REDUCED_GRAYSCALE_8 | Python: cv.IMREAD_REDUCED_GRAYSCALE_8 | 如果设置，则始终将图像转换为单通道灰度图像，图像尺寸减小1/8。 |
+| IMREAD_REDUCED_COLOR_8     | Python: cv.IMREAD_REDUCED_COLOR_8     | 如果设置，则始终将图像转换为3通道BGR彩色图像，图像尺寸减小1/8。 |
+| IMREAD_IGNORE_ORIENTATION  | Python: cv.IMREAD_IGNORE_ORIENTATION  | 如果设置，请不要根据EXIF的方向标志旋转图像。                 |
+
+
+
+**imread函数使用示例**
+
+```cpp
+#include<iostream>
+#include<opencv2/opencv.hpp>
+using namespace cv;
+using namespace std;
+int main()
+{
+    //read the image
+    Mat image = imread("./clock.jpg");
+    if (image.data != NULL)
+    {
+        //show the image
+        imshow("clock", image);
+        waitKey(0);
+    }
+    else
+    {
+        cout << "can&apos;t openc the file!" << endl;
+        getchar();
+    }
+    return 0;
+}
+```
+
+
+
+
+
+### imshow(  )
+
+
+
+使用[opencv](https://so.csdn.net/so/search?q=opencv&spm=1001.2101.3001.7020)对图像进行处理之后，通常调用imshow函数来显示处理结果。但是，我们经常会发现显示结果和我们预期的结果有些差别。这是由于opencv经常会涉及到对多种图像数据类型的处理，如果我们对图像数据类型之间的转换以及imshow函数理解不够透彻，那么显示结果则不会尽如人意。
+
+- ### [imshow](https://so.csdn.net/so/search?q=imshow&spm=1001.2101.3001.7020)函数详解
+
+对于imshow函数，opencv的官方注释指出：根据图像的[深度](https://so.csdn.net/so/search?q=深度&spm=1001.2101.3001.7020)，imshow函数会自动对其显示灰度值进行缩放，规则如下：
+
+1. 如果图像数据类型是8U（8位无符号），则直接显示。
+2. 如果图像数据类型是16U（16位无符号）或32S（32位有符号整数），则imshow函数内部会自动将每个像素值除以256并显示，即将原图像素值的范围由[0~255*256]映射到[0~255]
+3. 如果图像数据类型是32F（32位浮点数）或64F（64位浮点数），则imshow函数内部会自动将每个像素值乘以255并显示，即将原图像素值的范围由[0~1]映射到[0~255]（注意：原图像素值必须要归一化）
+
+- ### 案例说明
+
+基于imshow函数的以上显示原则，我们举例进行验证。
+
+**案例一：**
+
+首先加载一张原图并显示：
+
+![img](https://img-blog.csdnimg.cn/2019070814242092.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2pnajEyMzMyMQ==,size_16,color_FFFFFF,t_70)
+
+然后将原图转换为16U格式的图像并显示。我们会发现图像一片漆黑，这是因为imshow函数内部自动将每个[像素](https://so.csdn.net/so/search?q=像素&spm=1001.2101.3001.7020)值除以256，因此我们看到的图像像素值都是小于1的（原图灰度值范围是0~255）。
+
+为了能够正常显示图像，我们对16U格式的图像乘以一个系数256即可：
+
+**案例一代码：**
+
+```cpp
+#include <opencv2/opencv.hpp>
+using namespace std;
+using namespace cv;
+int main() {
+	Mat src1, src2,src3;
+	src1 = imread("1.png", 0);
+	imshow("原图", src1);
+	src1.convertTo(src2, CV_16U);
+	imshow("格式转换图", src2);
+	src2.convertTo(src3, CV_16U, 256);
+	imshow("格式转换系数修正图", src3);
+	waitKey(0);
+	return 0;
+}
+```
+
+**案例二：**
+
+首先加载一张原图并显示：
+
+![img](https://img-blog.csdnimg.cn/20190708143617575.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2pnajEyMzMyMQ==,size_16,color_FFFFFF,t_70)
+
+然后将原图转换为32F格式的图像并显示。我们会发现图像中目标全是白色，这是因为imshow函数内部自动将每个像素值乘以256，因此我们看到的图像像素值都是大于255的（原图灰度值范围是0~255）。
+
+![img](https://img-blog.csdnimg.cn/20190708143847499.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2pnajEyMzMyMQ==,size_16,color_FFFFFF,t_70)
+
+为了能够正常显示图像，我们对32F格式的图像进行归一化即可：
+
+**案例二代码：**
+
+```cpp
+#include <opencv2/opencv.hpp>
+using namespace std;
+using namespace cv;
+int main() {
+	Mat src1, src2,src3;
+	src1 = imread("1.png", 0);
+	imshow("原图", src1);
+	src1.convertTo(src2, CV_32F);
+	imshow("格式转换图", src2);
+	normalize(src2, src3, 0, 1, NORM_MINMAX);
+	imshow("格式转换系数修正图", src3);
+	waitKey(0);
+	return 0;
+}
+```
+
+
+
+
+
 ### Waitkey()
 
 Waitkey在你加载图片时必须使用，否则就会一闪而过；
@@ -427,7 +618,7 @@ Waitkey在你加载图片时必须使用，否则就会一闪而过；
 
 
 
-## 02图像色彩空间转换
+## 02色彩空间转换
 
 **所使用的API接口：**
 
@@ -594,7 +785,7 @@ void main()
 
 
 
-## 04像素的读写操作
+## 04像素的读写
 
 **所使用的API接口：**
 
@@ -758,7 +949,7 @@ color[2]=0; //2通道的R 分量
 
 
 
-### .ptr<  >()
+### .ptr<  >(  )
 
 **返回指定位置的指针**
 
@@ -769,10 +960,7 @@ _Tp* Mat::ptr(int y)
     CV_DbgAssert( y == 0 || (data && dims >= 1 && (unsigned)y < (unsigned)size.p[0]) );
     return (_Tp*)(data + step.p[0] * y);
 }
-123456
 ```
-
-例4
 
 ```cpp
 //指针类型为 uchar
@@ -790,13 +978,7 @@ uchar* current_row = image.ptr<uchar>(row);
 
 
 
-
-
-
-
-
-
-## 05像素的算术操作
+## 05像素的算术
 
 **所使用的API接口：**
 
@@ -876,7 +1058,7 @@ else if(data>255)
 
 
 
-## 06滚动条调整图像亮度与对比度
+## 06滚动条
 
 **所使用的API接口：**
 
@@ -884,6 +1066,8 @@ else if(data>255)
 - createTrackbar(）
 
 **代码演示：**
+
+***调整图像亮度与对比度***
 
 ```cpp
 static void on_lightness(int lightness, void* userdata) {
@@ -927,11 +1111,15 @@ addWeighted（）函数是将两张相同大小，相同类型的图片融合的
 **API详解：**
 
 void cvAddWeighted( const CvArr* src1, double alpha,const CvArr* src2, double beta,double gamma, CvArr* dst );
+
 参数1：src1，第一个原数组.
+
 参数2：alpha，第一个数组元素权重
 
 参数3：src2第二个原数组
+
 参数4：beta，第二个数组元素权重
+
 参数5：gamma，图1与图2作和后添加的数值。不要太大，不然图片一片白。总和等于255以上就是纯白色了。
 
 参数6：dst，输出图片
@@ -1003,8 +1191,10 @@ Mat g_dstImage;//声明混合图像变量
 
 void on_Trackbar(int, void*)//响应滑动条的回调函数
 {
-	g_dAlphaValue = double(g_nAlphaValueSlider) / g_nMaxAlphaValue; //当前Alpha相对于最大值所占比例（global，double）
-	g_dBetaValue = (1.0 - g_dAlphaValue); //当前Beta相对于最大值所占比例（global，double）
+	g_dAlphaValue = double(g_nAlphaValueSlider) / g_nMaxAlphaValue; 
+      //当前Alpha相对于最大值所占比例（global，double）
+	g_dBetaValue = (1.0 - g_dAlphaValue); 
+      //当前Beta相对于最大值所占比例（global，double）
 	addWeighted(g_srcImage1, g_dAlphaValue, g_srcImage2, g_dBetaValue, 0, g_dstImage);//图像的叠加
 	imshow(WINDOW_NAME, g_dstImage);//在指定窗口显示图像
 }
@@ -1027,7 +1217,8 @@ int main(int argc, char * * argv[])//argc 命令行参数个数，argv
 	namedWindow(WINDOW_NAME);
 	char TrackbarName[50];//声明滑动条的名称存储变量
 	sprintf(TrackbarName, "透明度%d", g_nMaxAlphaValue);
-	createTrackbar(TrackbarName, WINDOW_NAME, &g_nAlphaValueSlider, g_nMaxAlphaValue, on_Trackbar);//创建滑动条
+	createTrackbar(TrackbarName, WINDOW_NAME, &g_nAlphaValueSlider, g_nMaxAlphaValue, on_Trackbar);
+    //创建滑动条
 	//TrackbarName：滑动条的名字
 	//WINDOW_NAME：窗口名称
 	//&g_nAlphaValueSlider ：滑块当前位置的值，（将g_nAlphaValueSlider的地址返回给指针）
@@ -1050,7 +1241,7 @@ int main(int argc, char * * argv[])//argc 命令行参数个数，argv
 
 
 
-## 7、键盘响应
+## 07键盘响应
 
 
 
@@ -1088,7 +1279,11 @@ void QuickDemo::key_demo(Mat &image) {
 
 
 
-## 8、Opencv自带颜色表操作（滤镜）
+## 08Opencv自带颜色表操作
+
+**（滤镜）**
+
+
 
 **所使用的API接口：**
 
@@ -1139,7 +1334,7 @@ void QuickDemo::color_style_demo(Mat &image) {
 
 
 
-## 9、像素逻辑操作
+## 09像素逻辑操作
 
 **所使用的API接口：**
 
@@ -1170,7 +1365,7 @@ void QuickDemo::bitwise_demo(Mat &image) {
 
 
 
-## 10、[通道](https://so.csdn.net/so/search?q=通道&spm=1001.2101.3001.7020)分离与合并
+## 10[通道](https://so.csdn.net/so/search?q=通道&spm=1001.2101.3001.7020)分离与合并
 
 **所使用的API接口：**
 
@@ -1202,7 +1397,7 @@ void QuickDemo::split_merge_demo(Mat &image) {
 
 
 
-## 11、颜色提取与转换
+## 11颜色提取与转换
 
 **所使用的API接口：**
 
@@ -1228,7 +1423,7 @@ void QuickDemo::inrange_demo(Mat &image) {
 
 
 
-## 12、像素值统计
+## 12像素值统计
 
 **所使用的API接口：**
 
@@ -1255,16 +1450,20 @@ void QuickDemo::pixel_statistic_demo(Mat &image) {
 1234567891011121314
 ```
 
-# 13、几何图形绘制
 
-## 所使用的API接口：
+
+
+
+## 13几何图形绘制
+
+**所使用的API接口：**
 
 - rectangle()
 - circle()
 - line()
 - ellipse()
 
-## 代码演示：
+**代码演示：**
 
 ```cpp
 void QuickDemo::drawing_demo(Mat &image) {

@@ -18,7 +18,7 @@ void trackbar(int, void *)
     alpha_value_percent = double(alpha_value_slider) / alpha_value_max;
     beta_value_percent = (1.0 - alpha_value_slider);
     addWeighted(img1, alpha_value_percent, img2, beta_value_percent, 0, img);
-    imshow()
+    imshow(WINDOW_NAME,img);
 }
 
 int main()
