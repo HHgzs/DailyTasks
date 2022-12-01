@@ -16,12 +16,6 @@ int main()
         cout << it << " ";
 }
 
-
-
-
-
-
-
 #include <iostream>
 #include <stack>
 #include <vector>
@@ -53,11 +47,6 @@ int main()
 
     }
 }
-
-
-
-
-
 
 #include <iostream>
 #include <list>
