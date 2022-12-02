@@ -2891,3 +2891,387 @@ int main()
         }
     }
 }
+
+
+
+
+
+
+
+
+
+//19-1
+#include <iostream>
+#include <queue>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    int m, n, num;
+    string key;
+    cin >> m;
+    while (m--)
+    {
+        cin >> n;
+        queue<int> q;
+        stack<int> s;
+        while (n--)
+        {
+            cin >> key;
+            if (key == "push")
+            {
+                cin >> num;
+                q.push(num);
+                s.push(num);
+            }
+            else if (key == "pop")
+            {
+                if (q.empty())
+                    cout << "error" << endl;
+                else
+                    q.pop();
+                if (s.empty())
+                    cout << "error" << endl;
+                else
+                    s.pop();
+            }
+        }
+
+        int size = q.size();
+        for (int i = 0; i < size; i++)
+        {
+            cout << q.front() << " ";
+            q.push(q.front());
+            q.pop();
+        }
+        cout << endl;
+
+        size = s.size();
+        stack<int> s2;
+        for (int i = 0; i < size; i++)
+        {
+            s2.push(s.top());
+            s.pop();
+        }
+        for (int i = 0; i < size; i++)
+        {
+            cout << s2.top() << " ";
+            s2.pop();
+        }
+        cout << endl;
+    }
+}
+
+
+
+
+
+
+
+//19-2
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+int month[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int main()
+{
+    int a, b, c, n;
+    cin >> n;
+    while (n--)
+    {
+        scanf("%d/%d/%d", &a, &b, &c);
+        if ((a % 4 == 0 && a % 100 != 0) || a % 400 == 0)
+            month[2] = 29;
+        else
+            month[2] = 28;
+        int sum = 0;
+        for (int i = 1; i < b; i++)
+            sum += month[i];
+        sum += c;
+        cout << sum << endl;
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+//19-3
+#include <bits/stdc++.h>
+using namespace std;
+int a[1010];
+int main()
+{
+    ios::sync_with_stdio(false);
+    int n, tmp, tip = 0;
+    cin >> n;
+    while (n--)
+    {
+        cin >> tmp;
+        if (tmp)
+            a[++tip] = tmp;
+    }
+    long long sum = 0;
+    for (int i = 1; i <= tip - 2; i++)
+        for (int j = i + 1; j <= tip - 1; j++)
+            for (int k = j + 1; k <= tip; k++)
+                if ((a[i] + a[j] > a[k]) && (a[j] + a[k] > a[i]) && (a[i] + a[k] > a[j]))
+                    sum++;
+    cout << sum;
+    return 0;
+}
+
+
+
+
+
+
+
+//19-4
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+bool compares(vector<int> a, vector<int> b)
+{
+    if (a[4] != b[4])
+        return a[4] > b[4];
+    else
+    {
+        if (a[1] != b[1])
+            return a[1] > b[1];
+        else
+        {
+            if (a[2] != b[2])
+                return a[2] > b[2];
+            else
+                return a[3] > b[3];
+        }
+    }
+}
+
+int main()
+{
+    int n, a, b, c, d;
+    string s1, s2;
+    cin >> n;
+    vector<vector<int>> v1;
+    vector<vector<string>> v2;
+    v1.resize(n);
+    v2.resize(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> s1 >> s2 >> a >> b >> c;
+        v2[i].push_back(s1);
+        v2[i].push_back(s2);
+        v1[i].push_back(i);
+        v1[i].push_back(a);
+        v1[i].push_back(b);
+        v1[i].push_back(c);
+        v1[i].push_back(v1[i][1] + v1[i][2] + v1[i][3]);
+    }
+    sort(v1.begin(), v1.end(), compares);
+    for (int i = 0; i < 5; i++)
+    {
+        cout << v2[v1[i][0]][0] << " " << v2[v1[i][0]][1] << " " << v1[i][4] << endl;
+    }
+}
+
+
+
+
+
+
+
+//19-5
+#include <iostream>
+#include <cmath>
+#include <vector>
+using namespace std;
+
+bool is_prime(int i, vector<int> &v)
+{
+    int sqrts = (int)sqrt(i);
+    for (int j = 0; j < v.size() && v[j] <= sqrts; j++)
+        if (i % v[j] == 0)
+            return 0;
+    v.push_back(i);
+    return 1;
+}
+
+int main()
+{
+    unsigned long long N, sum = 2;
+    int n18 = 0, n0 = 1;
+    cin >> N;
+    vector<int> v(1, 2);
+
+    for (int i = 3; i <= N; i += 2)
+    {
+        if (is_prime(i, v))
+            sum += i;
+    }
+    cout << sum;
+}
+
+
+
+
+
+
+
+//19-6
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    char ch;
+    string line;
+
+    while (getline(cin, line), line != "0")
+    {
+        double temp_num = 0, sum = 0, temp1, temp2;
+        stack<double> num;
+        stack<char> opt;
+
+        for (int il = 0; il < line.length(); il++)
+        {
+            ch = line[il];
+            if (ch == 43 || ch == 45 || ch == 42 || ch == 47)
+            {
+                opt.push(ch);
+            }
+            else if (ch < 58 && ch > 47)
+            {
+                temp_num = temp_num * 10 + static_cast<double>(ch - 48);
+            }
+            else
+            {
+                if (temp_num != 0)
+                    num.push(temp_num);
+                temp_num = 0;
+            }
+            if (temp_num != 0 && il == line.length() - 1)
+                num.push(temp_num);
+        }
+
+        while (!opt.empty())
+        {
+            if (opt.top() == '/')
+            {
+                temp1 = num.top();
+                num.pop();
+                temp2 = num.top() / temp1;
+                num.pop();
+                num.push(temp2);
+            }
+            else if (opt.top() == '*')
+            {
+
+                temp1 = num.top();
+                num.pop();
+                temp2 = num.top() * temp1;
+                num.pop();
+                num.push(temp2);
+            }
+            else if (opt.top() == '+')
+            {
+                sum += num.top();
+                num.pop();
+            }
+            else if (opt.top() == '-')
+            {
+
+                sum -= num.top();
+                num.pop();
+            }
+
+            if (opt.size() == 1)
+            {
+
+                sum += num.top();
+                num.pop();
+            }
+            opt.pop();
+        }
+
+        cout << fixed << setprecision(2) << sum << endl;
+    }
+}
+
+
+
+
+
+
+//19-7
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool boom_next(int add, int n, vector<int> v)
+{
+    int i3;
+    v[add] -= 2;
+    v.push_back(0);
+    v.push_back(0);
+    for (i3 = 0; i3 <= n; i3++)
+    {
+        if (v[i3] < 0)
+            return 0;
+        v[i3] %= 3;
+        v[i3 + 1] -= v[i3];
+        v[i3 + 2] -= v[i3];
+    }
+    if (v[n+1] != 0 || v[n + 2] != 0)
+        return 0;
+    return 1;
+}
+
+bool boom(int add, int n, vector<int> v)
+{
+    v[add]++;
+    for (int i2 = 1; i2 <= n; i2++)
+    {
+        if (boom_next(i2, n, v))
+            return 1;
+    }
+    return 0;
+}
+
+int main()
+{
+    int n, m, num;
+    bool key = 0;
+    cin >> n >> m;
+    vector<int> v;
+    v.resize(n + 1);
+    for (int i = 0; i < 3 * m + 1; i++)
+    {
+        cin >> num;
+        v[num]++;
+    }
+    for (int i1 = 1; i1 <= n; i1++)
+    {
+        if (boom(i1, n, v))
+        {
+            key = 1;
+            cout << i1 << " ";
+        }
+    }
+    if (!key)
+        cout << "NO";
+}
