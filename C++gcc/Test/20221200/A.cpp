@@ -23,7 +23,7 @@ int main()
 
         for (int i = 0; i < len; i++)
         {
-            for (int j = i; j < i + len; j++)
+            for (int j = 1; j <= len; j++)
             {
                 string str2 = str.substr(i, j);
                 if (mp[str2] == 0)
