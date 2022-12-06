@@ -4,7 +4,7 @@
 using namespace std;
 const int day_tab[2][12] = {{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
                             {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
-const string month_name[13] = {" ", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
+const string month_name[13] = {" ", "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
 const string day_name[13] = {"th", "st", "nd", "rd"};
 
 int leap(int y)
@@ -77,7 +77,6 @@ int main()
         day_new = day_add;
 
         cout << month_name[month_new] << " " << day_new;
-        
         if (day_new % 10 > 0 && day_new % 10 <= 3 && day_new / 10 != 1)
             cout << day_name[day_new % 10] << " ";
         else
