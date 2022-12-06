@@ -583,6 +583,11 @@ int main()
 //     return 0;
 // }
 
+
+
+
+//calculator
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -665,6 +670,9 @@ int main()
         cout << fixed << setprecision(2) << sum << endl;
     }
 }
+
+
+
 
 #include <iostream>
 #include <vector>
