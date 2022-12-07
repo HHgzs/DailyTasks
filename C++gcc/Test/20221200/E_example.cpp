@@ -361,8 +361,7 @@ ostream &operator<<(ostream &out, const BigInt &num)
     return out;
 }
 
-void BigInt::simple_calc(vector<char> &num1, const vector<char> &num2,
-                         bool plus)
+void BigInt::simple_calc(vector<char> &num1, const vector<char> &num2,bool plus)
 {
     int size1 = num1.size();
     int size2 = num2.size();

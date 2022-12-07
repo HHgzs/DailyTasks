@@ -1,1 +1,2 @@
-    reverse(str.begin(), str.end());
+
+    // cout << bint.getnum() << endl;

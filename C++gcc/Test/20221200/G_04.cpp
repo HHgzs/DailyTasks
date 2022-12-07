@@ -11,6 +11,8 @@ class calcu
 public:
     static int count;
 };
+#include <bits/stdc++.h>
+using namespace std;
 
 int priority(char ope_)
 {
@@ -22,61 +24,96 @@ int priority(char ope_)
         return 0;
 }
 
-void calculate(stack<char> &Ope, stack<int> &Num)
+int calculate(deque<int> Num, deque<char> Opt)
 {
-    double a, b;
-    a = Num.top();
-    Num.pop();
-    b = Num.top();
-    Num.pop();
+    int a, b;
+    while (!Opt.empty())
+    {
+        a = Num.front();
+        Num.pop_front();
+        b = Num.front();
+        Num.pop_front();
 
-    if (Ope.top() == '+')
-        Num.push(b + a);
-    else if (Ope.top() == '-')
-        Num.push(b - a);
-    else if (Ope.top() == '*')
-        Num.push(b * a);
-    else if (Ope.top() == '/')
-            Num.push(b / a);
-    Ope.pop();
-
+        if (Opt.front() == '+')
+            Num.push_front(a + b);
+        else if (Opt.front() == '-')
+            Num.push_front(a - b);
+        else if (Opt.front() == '*')
+            Num.push_front(b * a);
+        else if (Opt.front() == '/')
+            Num.push_front(a / b);
+        Opt.pop_front();
+    }
+    return Num.front();
 }
 
-bool inStack(deque<int> num, deque<char> opt)
+int calcu_base(deque<int> Num, deque<char> Opt)
 {
-    stack<char> Ope;
-    char ope_;
-    stack<int> Num;
+    deque<char> opt_p;
+    deque<char> opt_x;
+    deque<int> num_p;
+    deque<int> num_x;
+    char opt_;
     int num_;
-
-    while (1)
+    int times = Num.size();
+    while (times--)
     {
-        num_ = num.front();
-        num.pop_front();
-        ope_ = opt.front();
-        opt.pop_front();
-        Num.push(num_);
+        num_ = Num.front();
+        Num.push_back(num_);
+        Num.pop_front();
+        opt_ = Opt.front();
+        Opt.push_back(opt_);
+        Opt.pop_front();
 
-        if (ope_ == '=')
+        if (priority(opt_) == 1)
         {
-            while (!Ope.empty())
-                calculate(Ope, Num);
-            if (Num.top() == 24)
-                return 1;
+            if (times != Num.size())
+            {
+                if (priority(Num.back()) == 1)
+                {
+                    num_p.push_back(num_);
+                    opt_p.push_back(opt_);
+                }
+                else
+                {
+                    num_x.push_back(num_);
+                    num_p.push_back(calculate(num_x, opt_x));
+                    opt_p.push_back(opt_);
+                    num_x.clear();
+                    opt_x.clear();
+                }
+            }
             else
-                return 0;
+            {
+                num_p.push_back(num_);
+                opt_p.push_back(opt_);
+            }
         }
-        else if (Ope.empty())
-            Ope.push(ope_);
-        else if (priority(Ope.top()) >= priority(ope_))
+        else if (priority(opt_) == 2)
         {
-            calculate(Ope, Num);
-            return 0;
-            Ope.push(ope_);
+            num_x.push_back(num_);
+            opt_x.push_back(opt_);
         }
         else
-            Ope.push(ope_);
+        {
+            if (priority(Num.back()) == 1)
+            {
+                num_p.push_back(num_);
+            }
+            else
+            {
+                num_x.push_back(num_);
+                num_p.push_back(calculate(num_x, opt_x));
+                num_x.clear();
+                opt_x.clear();
+            }
+        }
     }
+
+    if (calculate(num_p, opt_p) == 24)
+        return 1;
+    else
+        return 0;
 }
 
 void perm_opt(int times, char opters[], vector<deque<char>> &opt, deque<char> opt_temp)
@@ -176,7 +213,7 @@ void display(vector<deque<int>> num, vector<deque<char>> opt)
         for (int j = 0; j < opt.size(); j++)
         {
             opt[j].push_back('=');
-            if (inStack(num[i], opt[j]))
+            if (calcu_base(num[i], opt[j]))
             {
                 display_line(num[i], opt[j]);
             }
