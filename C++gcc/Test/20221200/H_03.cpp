@@ -35,7 +35,6 @@ int main()
     cnew_make(y_init, y_new, H);
     print_init(x_init, y_init);
     print_new(x_new, y_new);
-
     resize_double(c_exist, c_num, W, H);
     cexist_make(x_new, y_new, x_newv, y_newv, c_exist, W, H, n);
     cnum_make(c_num, c_exist, W, H, n);
