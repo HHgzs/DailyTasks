@@ -49,11 +49,36 @@ int main()
     for (int i = 0; i < n; i++)
         sum[x[i]][y[i]] = 1;
 
+    cout << "Cube of exist :\n";
+    for (int i = 0; i <= H; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            if (sum[i][j])
+                cout << "X ";
+            else
+                cout << "o ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+
     for (int i = 1; i <= H; i++)
     {
         for (int j = 1; j <= W; j++)
             sum[i][j] += sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1];
     }
+
+    cout << "Cube of num :\n";
+    for (int i = 0; i <= H; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            cout << right << setw(2) << sum[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
 
     while (m--)
     {

@@ -11,9 +11,9 @@ using namespace std;
 // }
 // int main()
 // {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(nullptr);
+    // cout.tie(nullptr);
 
 //     // map<int, int> m;
 //     // m.insert(pair<int,int>(0, 123));
