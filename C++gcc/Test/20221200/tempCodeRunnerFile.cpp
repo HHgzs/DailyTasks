@@ -1,2 +1,0 @@
-
-    // cout << bint.getnum() << endl;
