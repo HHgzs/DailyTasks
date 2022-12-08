@@ -1,15 +1,22 @@
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <map>
 using namespace std;
 
 void cinit_enter(multimap<long long, int> &, multimap<long long, int> &, int);
 void cnew_make(multimap<long long, int> &, map<int, int> &, int &);
-void cexist_resize(vector<vector<bool>> &, int, int);
+void resize_double(vector<vector<bool>> &, vector<vector<int>> &, int, int);
 void cexist_make(map<int, int> &, map<int, int> &, vector<int> &, vector<int> &, vector<vector<bool>> &, int, int, int);
 void cnum_make(vector<vector<int>> &, vector<vector<bool>> &, vector<int> &, vector<int> &, int, int, int);
-void display(vector<vector<int>> &, vector<vector<bool>> &, int, int);
 void calculate(vector<vector<int>> &, vector<int> &, vector<int> &, int, int, int);
+void print_init(multimap<long long, int> &, multimap<long long, int> &);
+void print_new(map<int, int>, map<int, int>);
+void print_newv(vector<int>, vector<int>, int, int);
+void print_nWH(int, int, int);
+void print_exist(vector<vector<bool>> &, int, int);
+void print_num(vector<vector<int>> &, int, int);
+void print_double(vector<vector<int>> &, vector<vector<bool>> &, int, int);
 
 int main()
 {
@@ -26,10 +33,14 @@ int main()
     cinit_enter(x_init, y_init, n);
     cnew_make(x_init, x_new, W);
     cnew_make(y_init, y_new, H);
-    cexist_resize(c_exist, W, H);
+    print_init(x_init, y_init);
+    print_nWH(W, H, n);
+    print_new(x_new, y_new);
+    print_newv(x_newv, y_newv, W, H);
+    resize_double(c_exist, c_num, W, H);
     cexist_make(x_new, y_new, x_newv, y_newv, c_exist, W, H, n);
     cnum_make(c_num, c_exist, x_newv, y_newv, W, H, n);
-    display(c_num, c_exist, W, H);
+    print_double(c_num, c_exist, W, H);
     while (m--)
         calculate(c_num, x_newv, y_newv, n, W, H);
 }
@@ -59,14 +70,16 @@ void cnew_make(multimap<long long, int> &c_init, map<int, int> &c_new, int &WH)
         c1 = c0;
     }
 }
-void cexist_resize(vector<vector<bool>> &c_exist, int W, int H)
+void resize_double(vector<vector<bool>> &c_exist, vector<vector<int>> &c_num, int W, int H)
 {
     c_exist.resize(H + 1);
     for (int i = 0; i <= H; i++)
         c_exist[i].resize(W + 1);
+    c_num.resize(H + 1);
+    for (int i = 0; i <= H; i++)
+        c_num[i].resize(W + 1);
 }
-void cexist_make(map<int, int> &x_new, map<int, int> &y_new,
-                 vector<int> &x_newv, vector<int> &y_newv, vector<vector<bool>> &c_exist, int W, int H, int n)
+void cexist_make(map<int, int> &x_new, map<int, int> &y_new, vector<int> &x_newv, vector<int> &y_newv, vector<vector<bool>> &c_exist, int W, int H, int n)
 {
     x_newv.resize(W + 1);
     y_newv.resize(H + 1);
@@ -86,6 +99,8 @@ void cexist_make(map<int, int> &x_new, map<int, int> &y_new,
 }
 void cnum_make(vector<vector<int>> &c_num, vector<vector<bool>> &c_exist, vector<int> &x_newv, vector<int> &y_newv, int W, int H, int n)
 {
+    x_newv.resize(W + 1);
+    y_newv.resize(H + 1);
     c_num[0][0] = c_exist[0][0];
     for (int i = 1; i <= H; i++)
     {
@@ -103,29 +118,9 @@ void cnum_make(vector<vector<int>> &c_num, vector<vector<bool>> &c_exist, vector
         }
     }
 }
-void display(vector<vector<int>> &c_num, vector<vector<bool>> &c_exist, int W, int H)
-{
-    for (int i = 0; i <= H; i++)
-    {
-        for (int j = 0; j <= W; j++)
-        {
-            cout << c_num[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-    for (int i = 0; i <= H; i++)
-    {
-        for (int j = 0; j <= W; j++)
-        {
-            cout << c_exist[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
 void calculate(vector<vector<int>> &c_num, vector<int> &x_newv, vector<int> &y_newv, int n, int W, int H)
 {
-    int c1_find, c2_find;
+    int c1_find = 0, c2_find = 0;
     cin >> c1_find >> c2_find;
     int sum = 0;
     map<int, int>::iterator x1_it, y1_it, x2_it, y2_it;
@@ -133,4 +128,78 @@ void calculate(vector<vector<int>> &c_num, vector<int> &x_newv, vector<int> &y_n
     int x2 = x_newv[c2_find], y2 = y_newv[c2_find];
     sum = c_num[y2][x2] - c_num[y2][x1 - 1] - c_num[y1 - 1][x2] + c_num[y1 - 1][x1 - 1];
     cout << sum;
+}
+
+void print_init(multimap<long long, int> &x_init, multimap<long long, int> &y_init)
+{
+    multimap<long long, int>::iterator it;
+    cout << "\n    init_x   order\n";
+    cout << "  __________________\n";
+    for (it = x_init.begin(); it != x_init.end(); it++)
+        cout << right << setw(10) << it->first << right << setw(4) << it->second << endl;
+    cout << "\n    init_y   order\n";
+    cout << "  __________________\n";
+    for (it = y_init.begin(); it != y_init.end(); it++)
+        cout << right << setw(10) << it->first << right << setw(4) << it->second << endl;
+    cout << endl;
+}
+void print_new(map<int, int> x, map<int, int> y)
+{
+    map<int, int>::iterator it;
+    cout << "order new_x\n";
+    for (it = x.begin(); it != x.end(); it++)
+        cout << right << setw(3) << it->first << right << setw(6) << it->second << endl;
+    cout << "\norder new_y\n";
+    for (it = y.begin(); it != y.end(); it++)
+        cout << right << setw(3) << it->first << right << setw(6) << it->second << endl;
+}
+void print_newv(vector<int> x, vector<int> y, int W, int H)
+{
+    cout << "order  newv_x\n";
+    for (int it = 0; it <= W; it++)
+        cout << right << setw(3) << it << right << setw(6) << x[it] << endl;
+    cout << "order  newv_y\n";
+    for (int it = 0; it <= H; it++)
+        cout << right << setw(3) << it << right << setw(6) << y[it] << endl;
+    cout << endl;
+}
+void print_nWH(int W, int H, int n)
+{
+    cout << "Width Height Number";
+    cout << "\n  " << W + 1 << "      " << H + 1 << "     " << n << "\n\n";
+}
+void print_exist(vector<vector<bool>> &c_exist, int W, int H)
+{
+    cout << "Cube of c_exist :\n";
+    for (int i = 0; i <= H; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            if (c_exist[i][j])
+                cout << "X ";
+            else
+                cout << "o ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+void print_num(vector<vector<int>> &c_num, int W, int H)
+{
+    cout << "Cube of c_num :\n";
+    for (int i = 0; i <= H; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            cout << right << setw(2) << c_num[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+void print_double(vector<vector<int>> &c_num, vector<vector<bool>> &c_exist, int W, int H)
+{
+    cout << endl;
+    print_exist(c_exist, W, H);
+    print_num(c_num, W, H);
 }
