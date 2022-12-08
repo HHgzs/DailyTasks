@@ -1,93 +1,63 @@
 #include <iostream>
-#include <iomanip>
 #include <algorithm>
 using namespace std;
 
 const int N = 5010;
-int x[N], y[N], sum[N][N];
-struct st1
+int c1, c2, n, x[N], y[N], sum[N][N];
+int x01, x02, y01, y02, m;
+struct st
 {
-    long long x;
-    int pos;
-} dx[N];
-struct st2
-{
-    long long y;
-    int pos;
-} dy[N];
-bool cmp1(st1 p, st1 q) { return p.x < q.x; }
-bool cmp2(st2 p, st2 q) { return p.y < q.y; }
+    int xy, pos;
+};
+st dx[N], dy[N];
+bool cmp(st p, st q) { return p.xy < q.xy; }
 int main()
 {
-    std::ios::sync_with_stdio(false);
-    int n, m;
+    cin.tie(0)->ios::sync_with_stdio(false);
     cin >> n >> m;
     for (int i = 0; i < n; i++)
     {
-        cin >> dx[i].x >> dy[i].y;
+        cin >> dx[i].xy >> dy[i].xy;
         dx[i].pos = i, dy[i].pos = i;
     }
-    sort(dx, dx + n, cmp1);
-    sort(dy, dy + n, cmp2);
+    sort(dx, dx + n, cmp);
+    sort(dy, dy + n, cmp);
     x[dx[0].pos] = 1;
     y[dy[0].pos] = 1;
     int W = 1, H = 1;
     for (int i = 1; i < n; i++)
     {
-        if (dx[i].x > dx[i - 1].x)
+        if (dx[i].xy > dx[i - 1].xy)
             x[dx[i].pos] = ++W;
         else
             x[dx[i].pos] = W;
     }
     for (int i = 1; i < n; i++)
     {
-        if (dy[i].y > dy[i - 1].y)
+        if (dy[i].xy > dy[i - 1].xy)
             y[dy[i].pos] = ++H;
         else
             y[dy[i].pos] = H;
     }
     for (int i = 0; i < n; i++)
-        sum[x[i]][y[i]] = 1;
-
-    cout << "Cube of exist :\n";
-    for (int i = 0; i <= H; i++)
-    {
-        for (int j = 0; j <= W; j++)
-        {
-            if (sum[i][j])
-                cout << "X ";
-            else
-                cout << "o ";
-        }
-        cout << endl;
-    }
-    cout << endl;
+        sum[y[i]][x[i]] = 1;
 
     for (int i = 1; i <= H; i++)
-    {
         for (int j = 1; j <= W; j++)
             sum[i][j] += sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1];
-    }
-
-    cout << "Cube of num :\n";
-    for (int i = 0; i <= H; i++)
-    {
-        for (int j = 0; j <= W; j++)
-        {
-            cout << right << setw(2) << sum[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
 
     while (m--)
     {
-        int c1, c2;
         cin >> c1 >> c2;
-        int ans = 0;
-        int x1 = x[c1], y1 = y[c1];
-        int x2 = x[c2], y2 = y[c2];
-        ans = sum[y2][x2] - sum[y2][x1 - 1] - sum[y1 - 1][x2] + sum[y1][x1];
-        cout << ans << endl;
+        x01 = x[c1];
+        y01 = y[c1];
+        x02 = x[c2];
+        y02 = y[c2];
+        if (x01 > x02)
+            swap(x01, x02);
+        if (y01 > y02)
+            swap(y01, y02);
+        cout << sum[y02][x02] - sum[y02][x01 - 1] - sum[y01 - 1][x02] + sum[y01 - 1][x01 - 1] << '\n';
     }
+    return 0;
 }
