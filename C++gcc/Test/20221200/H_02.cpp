@@ -9,7 +9,7 @@ void cinit_enter(multimap<long long, int> &, multimap<long long, int> &, int);
 void cnew_make(multimap<long long, int> &, map<int, int> &, int &);
 void cexist_resize(vector<vector<bool>> &, int, int);
 void cexist_make(map<int, int> &, map<int, int> &, vector<vector<bool>> &, int, int);
-void cnum_make(vector<vector<int>> &, map<int, int> &, map<int, int> &, vector<vector<bool>> &, int, int, int);
+void cnum_make(vector<vector<int>> &, map<int, int> &, map<int, int> &, vector<vector<bool>> &, vector<int> &, vector<int> &, int64_t);
 void calculate(map<int, int> &, map<int, int> &, map<int, int> &, int, int, int, int, int);
 
 int main()
@@ -25,6 +25,7 @@ int main()
     map<int, int> y_new;
     vector<vector<bool>> c_exist;
     vector<vector<int>> c_num;
+    vector<int> x_newv, y_newv;
     cin >> n >> m;
     cinit_enter(x_init, y_init, n);
     cnew_make(x_init, x_new, W);
@@ -82,20 +83,24 @@ void cexist_make(map<int, int> &x_new, map<int, int> &y_new, vector<vector<bool>
 }
 
 void cnum_make(vector<vector<int>> &c_num, map<int, int> &x_new, map<int, int> &y_new,
-               vector<vector<bool>> &c_exist, int W, int H, int n)
+               vector<vector<bool>> &c_exist, vector<int> &x_newv, vector<int> &y_newv, int n)
 {
     map<int, int>::iterator x_it, y_it, c_it;
+    for (x_it = x_new.begin(); x_it != x_new.end(); x_it++)
+    {
+        x_newv[x_it->first] = x_it->second;
+    }
+    for (y_it = y_new.begin(); y_it != y_new.end(); y_it++)
+    {
+        y_newv[y_it->first] = y_it->second;
+    }
+
     for (int i = 0; i < n; i++)
     {
         x_it = x_new.find(i);
         y_it = y_new.find(i);
 
-
-
-
-
-
-        for (int ix = 0; ix <= x_it->second; ix++)
+        for (int ix = 0; ix <= x_newv[i]; ix++)
         {
             for (int iy = 0; iy <= y_it->second; iy++)
             {
@@ -114,16 +119,4 @@ void calculate(vector<vector<int>> &c_num, map<int, int> &x_new, map<int, int> &
     y1_it = y_new.find(c1_find);
     x1_it = x_new.find(c2_find);
     y1_it = y_new.find(c2_find);
-
-
-
-
-
-
-
-
-
-
-
-
 }
