@@ -11,6 +11,10 @@ string getDescription()
 }
 int main()
 {
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(nullptr);
+    // cout.tie(nullptr);
+
     // map<int, int> m;
     // m.insert(pair<int,int>(0, 123));
     // m.insert(pair<int,int>(1, 234));
