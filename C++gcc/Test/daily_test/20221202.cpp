@@ -80,3 +80,86 @@ int main()
         cout << fixed << setprecision(2) << sum << endl;
     }
 }
+
+// #include <iostream>
+// #include <string>
+// #include <stack>
+// #include <iomanip>
+// using namespace std;
+// const int add = 0, substract = 1, multiply = 2, divide = 3;
+// int main()
+// {
+//     stack<double> S;
+//     string str = "3 + 4";
+//     int judge = add;
+//     while (getline(cin, str) && str != "0")
+//     {
+//         double temp = 0, result = 0;
+//         for (int i = 0; i < size(str); i++)
+//         {
+//             if (str[i] >= '0' && str[i] <= '9') // 该位上是个数字,则对该位的下一位进行讨论
+//             {
+//                 temp += (double)str[i] - 48;
+//                 if (str[i + 1] >= '0' && str[i] <= '9') // 下一位仍然是数字
+//                 {
+//                     temp *= 10;
+//                     continue;
+//                 }
+//                 if (str[i + 1] == ' ') // 下一位是一个空格，则根据运算符把temp分情况存入stack中
+//                 {
+//                     if (judge == add)
+//                         S.push(temp);
+//                     if (judge == substract)
+//                         S.push(-temp);
+//                     if (judge == multiply)
+//                     {
+//                         double temp1 = S.top();
+//                         S.pop();
+//                         S.push((str[i] - 48) * temp1);
+//                     }
+//                     if (judge == divide)
+//                     {
+//                         double temp1 = S.top();
+//                         S.pop();
+//                         S.push(temp1 / (double)(str[i] - 48));
+//                     }
+//                     temp = 0;
+//                     continue;
+//                 }
+//                 if (str[i + 1] == '\0') // i已到达最后一位
+//                     S.push(temp);
+//                 break;
+//             }
+//             if (str[i] == ' ')
+//                 continue; // 空格直接跳到下一次循环
+//             if (str[i] == '+')
+//             {
+//                 judge = add;
+//                 continue;
+//             }
+//             if (str[i] == '-')
+//             {
+//                 judge = substract;
+//                 continue;
+//             }
+//             if (str[i] == '*')
+//             {
+//                 judge = multiply;
+//                 continue;
+//             }
+//             if (str[i] == '/')
+//             {
+//                 judge = divide;
+//                 continue;
+//             }
+//         }
+//         for (int i = 0; i < S.size(); i++)
+//         {
+//             result += S.top();
+//             S.pop();
+//         }
+//         cout.precision(2);
+//         cout.setf(ios::fixed);
+//         cout << result << endl;
+//     }
+// }
