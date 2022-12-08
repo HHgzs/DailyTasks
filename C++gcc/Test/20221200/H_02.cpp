@@ -1,7 +1,5 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <set>
 #include <map>
 using namespace std;
 
@@ -10,7 +8,8 @@ void cnew_make(multimap<long long, int> &, map<int, int> &, int &);
 void cexist_resize(vector<vector<bool>> &, int, int);
 void cexist_make(map<int, int> &, map<int, int> &, vector<int> &, vector<int> &, vector<vector<bool>> &, int, int, int);
 void cnum_make(vector<vector<int>> &, vector<vector<bool>> &, vector<int> &, vector<int> &, int, int, int);
-void calculate(vector<vector<int>> &, vector<int> &, vector<int> &, int, int, int, int, int);
+void display(vector<vector<int>> &, vector<vector<bool>> &, int, int);
+void calculate(vector<vector<int>> &, vector<int> &, vector<int> &, int, int, int);
 
 int main()
 {
@@ -33,6 +32,8 @@ int main()
     cexist_resize(c_exist, W, H);
     cexist_make(x_new, y_new, x_newv, y_newv, c_exist, W, H, n);
     cnum_make(c_num, c_exist, x_newv, y_newv, W, H, n);
+    while (m--)
+        calculate(c_num, x_newv, y_newv, n, W, H);
 }
 
 void cinit_enter(multimap<long long, int> &x_init, multimap<long long, int> &y_init, int n)
@@ -45,7 +46,6 @@ void cinit_enter(multimap<long long, int> &x_init, multimap<long long, int> &y_i
         y_init.insert(pair<long long, int>(y0, i));
     }
 }
-
 void cnew_make(multimap<long long, int> &c_init, map<int, int> &c_new, int &WH)
 {
     WH = 0;
@@ -61,16 +61,14 @@ void cnew_make(multimap<long long, int> &c_init, map<int, int> &c_new, int &WH)
         c1 = c0;
     }
 }
-
 void cexist_resize(vector<vector<bool>> &c_exist, int W, int H)
 {
     c_exist.resize(H + 1);
     for (int i = 0; i <= H; i++)
         c_exist[i].resize(W + 1);
 }
-
 void cexist_make(map<int, int> &x_new, map<int, int> &y_new,
-                 vector<int> &x_newv, vector<int> &y_newv, vector<vector<bool>> &c_exist, int W,int H,int n)
+                 vector<int> &x_newv, vector<int> &y_newv, vector<vector<bool>> &c_exist, int W, int H, int n)
 {
     x_newv.resize(W + 1);
     y_newv.resize(H + 1);
@@ -87,16 +85,7 @@ void cexist_make(map<int, int> &x_new, map<int, int> &y_new,
     {
         c_exist[y_newv[i]][x_newv[i]] = 1;
     }
-
-    for (x_it = x_new.begin(); x_it != x_new.end(); x_it++)
-    {
-        for (y_it = y_new.begin(); y_it != y_new.end(); y_it++)
-        {
-            c_exist[y_it->second][x_it->second] = 1;
-        }
-    }
 }
-
 void cnum_make(vector<vector<int>> &c_num, vector<vector<bool>> &c_exist, vector<int> &x_newv, vector<int> &y_newv, int W, int H, int n)
 {
     c_num[0][0] = c_exist[0][0];
@@ -116,11 +105,34 @@ void cnum_make(vector<vector<int>> &c_num, vector<vector<bool>> &c_exist, vector
         }
     }
 }
-
-void calculate(vector<vector<int>> &c_num, vector<int> &x_newv, vector<int> &y_newv,
-               int c1_find, int c2_find, int n, int W, int H)
+void display(vector<vector<int>> &c_num, vector<vector<bool>> &c_exist, int W, int H)
 {
+    for (int i = 0; i <= H; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            cout << c_num[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+    for (int i = 0; i <= H; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            cout << c_exist[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+void calculate(vector<vector<int>> &c_num, vector<int> &x_newv, vector<int> &y_newv, int n, int W, int H)
+{
+    int c1_find, c2_find;
+    cin >> c1_find >> c2_find;
+    int sum = 0;
     map<int, int>::iterator x1_it, y1_it, x2_it, y2_it;
     int x1 = x_newv[c1_find], y1 = y_newv[c1_find];
     int x2 = x_newv[c2_find], y2 = y_newv[c2_find];
+    sum = c_num[y2][x2] - c_num[y2][x1 - 1] - c_num[y1 - 1][x2] + c_num[y1 - 1][x1 - 1];
+    cout << sum;
 }
