@@ -89,6 +89,18 @@ void cnum_make(vector<vector<int>> &c_num, map<int, int> &x_new, map<int, int> &
     {
         x_it = x_new.find(i);
         y_it = y_new.find(i);
+
+
+
+
+
+
+
+
+
+
+
+
         for (int ix = 0; ix <= x_it->second; ix++)
         {
             for (int iy = 0; iy <= y_it->second; iy++)
