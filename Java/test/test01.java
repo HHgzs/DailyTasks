@@ -1,6 +1,6 @@
 package test;
 
-public class t22120101 {
+public class test01 {
     public static void main(String[] args) {
         long a1 = 10000000000000L;
         float a2 = 1.25F;
