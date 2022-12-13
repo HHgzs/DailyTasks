@@ -3,7 +3,6 @@ package test;
 import java.util.Scanner;
 // import java.util.Random;
 
-
 public class test02 {
     public static void main(String[] args) {
 
@@ -40,17 +39,17 @@ public class test02 {
         // Scanner sc = new Scanner(System.in);
         // boolean key = true;
         // while (key) {
-        //     String str = sc.next();
-        //     String str2 = new StringBuilder().append(str).reverse().toString();
-        //     if (str.equals("0")) {
-        //         key = false;
-        //         System.out.println("Stop");
-        //         break;
-        //     }
-        //     if (str.equals(str2))
-        //         System.out.println("Yes");
-        //     else
-        //         System.out.println("No");
+        // String str = sc.next();
+        // String str2 = new StringBuilder().append(str).reverse().toString();
+        // if (str.equals("0")) {
+        // key = false;
+        // System.out.println("Stop");
+        // break;
+        // }
+        // if (str.equals(str2))
+        // System.out.println("Yes");
+        // else
+        // System.out.println("No");
         // }
         // sc.close();
 
@@ -65,14 +64,36 @@ public class test02 {
         // input.close();
         // man.test_super();
 
-        person prs = new person(23);
-        student stu = new student(12);
-        System.out.println(prs.age);
-        System.out.println(stu.age);
-        prs.polymorphism();
-        stu.polymorphism();
+        // person prs = new person(23);
+        // student stu = new student(12);
+        // System.out.println(prs.age);
+        // System.out.println(stu.age);
+        // prs.polymorphism();
+
+        // person tch = new teacher(24, "tech");
+        // display(tch);
+
+        // person tch = new teacher(30, "tech");
+
+        // if (tch instanceof teacher) {
+        //     teacher tch2 = (teacher) tch;
+        //     tch2.teach();
+        // }
+
+        // if (tch instanceof teacher tch2) {
+        //     tch2.teach();
+        // }
+    // }
+
+    // public static void display(person man) {
+    //     man.polymorphism();
+    // }
+
+        study std1 = new English();
+        std1.what();
+        std1.when();
+
+
     }
+
 }
-
-
-
