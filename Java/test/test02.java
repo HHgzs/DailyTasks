@@ -76,23 +76,39 @@ public class test02 {
         // person tch = new teacher(30, "tech");
 
         // if (tch instanceof teacher) {
-        //     teacher tch2 = (teacher) tch;
-        //     tch2.teach();
+        // teacher tch2 = (teacher) tch;
+        // tch2.teach();
         // }
 
         // if (tch instanceof teacher tch2) {
-        //     tch2.teach();
+        // tch2.teach();
         // }
-    // }
+        // }
 
-    // public static void display(person man) {
-    //     man.polymorphism();
-    // }
+        // public static void display(person man) {
+        // man.polymorphism();
+        // }
 
-        study std1 = new English();
-        std1.what();
-        std1.when();
+        // study std1 = new English();
+        // std1.what();
+        // std1.when();
 
+        // new person(25) {
+        //     @Override
+        //     public void polymorphism() {
+        //         System.out.println("Forth");
+        //     }
+        // }.polymorphism();
+
+        // person prs2 = new person(30){
+        //     @Override
+        //     public void polymorphism() {
+        //         System.out.println("Fifth");
+        //     }
+        // };
+        // prs2.polymorphism();
+
+        
 
     }
 
