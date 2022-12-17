@@ -622,7 +622,7 @@ Waitkey在你加载图片时必须使用，否则就会一闪而过；
 
 **所使用的API接口：**
 
-- cvtColor()
+### cvtColor()
 
 **代码演示：**
 
@@ -1239,6 +1239,33 @@ int main(int argc, char * * argv[])//argc 命令行参数个数，argv
 
 
 
+### namedWindow（）
+
+1.Api及其参数
+
+```python
+cv.namedWindow(winname, flags=None)
+1
+```
+
+参数：
+
+- winname:Name of the window in the window caption that may be used as a window identifier。简单点理解，窗口名字；
+- flags:Flags of the window. The supported flags are: (cv::WindowFlags)。窗口标志。标志参数有以下几种:
+
+| 标志参数         | 作用                                     |
+| ---------------- | ---------------------------------------- |
+| WINDOW_NORMAL    | 显示图像后，允许用户随意调整窗口大小     |
+| WINDOW_AUTOSIZE  | 根据图像大小显示窗口，不允许用户调整大小 |
+| WINDOW_FREERATIO | 窗口大小自适应比例                       |
+| WINDOW_KEEPRATIO | 保持图像的比例                           |
+
+
+
+
+
+
+
 
 
 ## 07键盘响应
@@ -1272,6 +1299,16 @@ void QuickDemo::key_demo(Mat &image) {
 	}
 }
 ```
+
+
+
+### waitKey()
+
+waitKey(intNum)表示等待intNum毫秒，如果这中间有键盘按键，则返回对应的ASCII码。
+
+
+
+
 
 
 
@@ -1329,7 +1366,6 @@ void QuickDemo::color_style_demo(Mat &image) {
 		imshow("颜色风格", dst);
 	}
 }
-12345678910111213141516171819202122232425262728293031323334353637
 ```
 
 
@@ -1360,12 +1396,185 @@ void QuickDemo::bitwise_demo(Mat &image) {
 	//bitwise_xor(m1, m2, dst);
 	imshow("位操作", dst);
 }
-1234567891011121314
 ```
 
 
 
-## 10[通道](https://so.csdn.net/so/search?q=通道&spm=1001.2101.3001.7020)分离与合并
+
+
+### bitwise
+
+使用opencv对图像处理时，可能需要对图像按位操作，而opencv自带位操作运算函数，不必再手写遍历算法，位操作函数包括：
+`bitwise_and` 与
+`bitwise_or` 或
+`bitwise_not` 非
+`bitwise_xor` 异或
+
+1. bitwise_and
+
+将`src1`和 `src2`每个像素的像素值按位与，比如某位置对应两个像素值分别为：`23` 和 `185`，则输出像素值为`17`，因为`23`，`185`的二进制分别为`10111`，`10111001`，按位与得到`10001`即`17`。
+
+```cpp
+/* 输入 src1，src2，可为灰度图或彩色图，src1 和 src2 大小需一样；
+** 输出 dst，尺寸和类型与 src 保持一致；
+** 掩膜 mask，可通俗理解为一个遮罩，只对 mask 设定的有效区域进行操作；
+*/
+void bitwise_or(InputArray src1, InputArray src2, OutputArray dst, InputArray mask = noArray());
+12345
+```
+
+
+
+2. bitwise_or
+
+将`src1`和 `src2`每个像素的像素值按位或，比如某位置对应两个像素值分别为：`23` 和 `185`，则输出像素值为`191`，因为`23`，`185`的二进制分别为`10111`，`10111001`，按位或得到`10111111`即`191`。
+
+```cpp
+/* 输入 src1，src2，可为灰度图或彩色图，src1 和 src2 大小需一样；
+** 输出 dst，尺寸和类型与 src 保持一致；
+** 掩膜 mask，可通俗理解为一个遮罩，只对 mask 设定的有效区域进行操作；
+*/
+void bitwise_and(InputArray src1, InputArray src2, OutputArray dst, InputArray mask = noArray());
+12345
+```
+
+
+
+3. bitwise_not
+
+将`src` 像素的像素值按位取非，比如某像素值为：`23`，则输出像素值为`232`，因为`23`的二进制为`10111`，按位取反得到`11101000`即`232`。
+
+```cpp
+/* 输入 src 可为灰度图或彩色图；
+** 输出 dst，尺寸和类型与 src 保持一致；
+** 掩膜 mask，可通俗理解为一个遮罩，只对 mask 设定的有效区域进行操作；
+*/
+void bitwise_not(InputArray src, OutputArray dst, InputArray mask = noArray());
+12345
+```
+
+
+
+4. bitwise_xor
+
+将`src1`和 `src2`每个像素的像素值按位异或，比如某位置对应两个像素值分别为：`23` 和 `185`，则输出像素值为`177`，因为`23`，`185`的二进制分别为`10111`，`10111001`，按位异或得到`10101110`即`174`。
+
+```cpp
+/* 输入 src1，src2，可为灰度图或彩色图，src1 和 src2 大小需一样；
+** 输出 dst，尺寸和类型与 src 保持一致；
+** 掩膜 mask，可通俗理解为一个遮罩，只对 mask 设定的有效区域进行操作；
+*/
+void bitwise_xor(InputArray src1, InputArray src2, OutputArray dst, InputArray mask = noArray());
+
+```
+
+
+
+5.带掩膜操作
+
+### mask()
+
+例如将src1中人头取反，其他保持不变，代码如下：
+
+```cpp
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
+
+int main() {
+  Mat src1 = imread("img1.png", IMREAD_GRAYSCALE);
+  Mat src2 = imread("img2.png", IMREAD_GRAYSCALE);
+  cv::resize(src1, src1, Size(640, 480));
+  cv::resize(src2, src2, Size(640, 480));
+  imshow("src1", src1);
+  imshow("src2", src2);
+  // 将mask中包含人头的区域像素值设为255
+  Mat mask = Mat::zeros(Size(640, 480), CV_8UC1);
+  mask(Rect(320, 50, 260, 310)) = 255;
+
+  Mat dst;
+  // 只对人头取反
+  bitwise_not(src1, dst, mask);
+  imshow("mask1", mask);
+  // 将mask反转，得到新的mask
+  bitwise_not(mask, mask);
+  imshow("mask2", mask);
+  // 将src1中人头之外的区域拷贝到dst
+  src1.copyTo(dst, mask);
+  imshow("dst", dst);
+  waitKey();
+
+  return 0;
+}
+
+```
+
+
+
+
+
+
+
+### Mat::zeros
+
+​        cv::Mat::zeros在官网上有三种定义，因为理解起来相对容易，这里把定义放上：
+
+
+
+2.1 zeros() [1/3]
+
+​        三个参数一次是行、列、类型
+
+```cpp
+static CV_NODISCARD_STD MatExpr cv::Mat::zeros 	(int rows, int cols, int type) 		
+//参数 Parameters
+    rows	Number of rows.
+    cols	Number of columns.
+    type	Created matrix type. 
+```
+
+​     2.2 zeros() [2/3]
+
+​        两个参数，第一个是(列、行)，第二个是类型
+
+```cpp
+static CV_NODISCARD_STD MatExpr cv::Mat::zeros 	(Size size, int type) 	
+
+Parameters
+    size	Alternative to the matrix size specification Size(cols, rows) .
+    type	Created matrix type. 
+```
+
+2.3 zeros() [3/3]
+
+```cpp
+static CV_NODISCARD_STD MatExpr cv::Mat::zeros(int ndims, const int *sz, int type ) 	
+
+Parameters
+    ndims	Array dimensionality.矩阵维度
+    sz		Array of integers specifying the array shape.整数数组用于指定矩阵维度
+    type	Created matrix type.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 10通道分离与合并
 
 **所使用的API接口：**
 
@@ -1392,7 +1601,6 @@ void QuickDemo::split_merge_demo(Mat &image) {
 	mixChannels(&image,1, &dst,1, from_to,3);
 	imshow("通道混合", dst);
 }
-1234567891011121314151617
 ```
 
 
@@ -1418,7 +1626,6 @@ void QuickDemo::inrange_demo(Mat &image) {
 	image.copyTo(redback, mask);
 	imshow("roi", redback);
 }
-123456789101112
 ```
 
 
@@ -1447,7 +1654,6 @@ void QuickDemo::pixel_statistic_demo(Mat &image) {
 	meanStdDev(image, mean, stddev);
 	std::cout << "mead:" << mean << "  stddev:" << stddev << std::endl;
 }
-1234567891011121314
 ```
 
 
@@ -1553,7 +1759,6 @@ void QuickDemo::polyline_drawing_demo() {
 	drawContours(bg, cnts, -1,Scalar(0,255,0),2);
 	imshow("多边形绘制", bg);
 }
-1234567891011121314151617181920
 ```
 
 # 16、鼠标操作与响应
@@ -1612,8 +1817,9 @@ void QuickDemo::mouse_drawing_demo(Mat &image) {
 	imshow("鼠标绘制", image);
 	temp = image.clone();
 }
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647
 ```
+
+
 
 # 17、像素类型转换与归一化
 
@@ -1672,7 +1878,6 @@ void QuickDemo::flip_demo(Mat &image) {
 	flip(image, dst, 1);// 0以x为轴镜像，1以y轴镜像，-1以x=y为轴镜像
 	imshow("图像翻转", dst);
 }
-12345
 ```
 
 # 20、图像旋转
@@ -1739,7 +1944,6 @@ void QuickDemo::video_demo(Mat &image) {
 	capture.release();
 	writer.release();
 }
-12345678910111213141516171819202122232425262728
 ```
 
 # 22、图像直方图
@@ -1787,7 +1991,7 @@ void QuickDemo::showHistogram_demo(Mat &image) {
 	}
 	imshow("直方图", histImage);
 }
-123456789101112131415161718192021222324252627282930313233343536
+
 ```
 
 # 23、二维直方图
@@ -1826,7 +2030,7 @@ void QuickDemo::histogram_2d_demo(Mat &image) {
 	imshow("2D灰度直方图", hist_2d);
 }
 
-123456789101112131415161718192021222324252627
+
 ```
 
 # 24、直方图均衡化
@@ -1844,7 +2048,6 @@ void QuickDemo::histogram_eq_demo(Mat &image) {
 	equalizeHist(gray, dst);
 	imshow("直方图均衡化", dst);
 }
-123456
 ```
 
 # 25、均值滤波
@@ -1861,7 +2064,6 @@ void QuickDemo::blur_demo(Mat &image) {
 	blur(image, dst, Size(3, 3), Point(-1, -1));
 	imshow("滤波图像", dst);
 }
-12345
 ```
 
 # 26、高斯滤波
@@ -1878,7 +2080,6 @@ void QuickDemo::gaussian_blur_demo(Mat &image) {
 	GaussianBlur(image, dst, Size(5, 5),5);
 	imshow("高斯模糊", dst);
 }
-12345
 ```
 
 # 27、双边线性滤波
@@ -1895,7 +2096,6 @@ void QuickDemo::bifilter_demo(Mat &image) {
 	bilateralFilter(image, dst, 0, 100, 10);
 	imshow("双边滤波", dst);
 }
-12345
 ```
 
 
