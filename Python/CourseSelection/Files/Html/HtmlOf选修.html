@@ -1,0 +1,305 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="content-style-type" content="text/css" />
+  <meta http-equiv="content-script-type" content="text/javascript" />
+  <script type="text/javascript">
+      window.$BG_LANG='zh';
+  </script>
+  <script type="text/javascript" src="/eams/static/scripts/jquery/jquery,jquery.ui.core.js?bg=3.4.3"></script>
+  <script type="text/javascript" src="/eams/static/scripts/plugins/jquery-form,jquery-history,jquery-colorbox,jquery-chosen.js?bg=3.4.3"></script>
+  <script type="text/javascript" src="/eams/static/js/plugins/jquery.subscribe,/js/struts2/jquery.struts2,jquery.ui.struts2.js?bg=3.4.3"></script>
+  <script type="text/javascript" src="/eams/static/scripts/beangle/beangle,beangle-ui.js?bg=3.4.3"></script>
+  <script type="text/javascript">var App = {contextPath:"/eams"};var funcInit = function () {jQuery.struts2_jquery.version="3.6.1";beangle.contextPath=App.contextPath;jQuery.scriptPath = App.contextPath+"/static/";jQuery.struts2_jquerySuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});};</script>
+  <script type="text/javascript" src="/eams/static/scripts/my97/WdatePicker-4.72.js?compress=no"></script>
+  <link id="jquery_theme_link" rel="stylesheet" href="/eams/static/themes/smoothness/jquery-ui.css?s2j=3.6.1" type="text/css"/>
+  <link id="beangle_theme_link" href="/eams/static/themes/default/beangle-ui,colorbox,chosen.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/eams/static/css/foundation.css" type="text/css"/>
+  <script type="text/javascript" src="/eams/static/scripts/highcharts.js"></script>
+
+	<script src="/eams/static/scripts/require.config.js?v=3"></script>
+	<script>
+	require.baseUrl="/eams/static/scripts";
+	</script>
+	<script src="/eams/static/scripts/require.js"></script>
+	<script type="text/javascript" src="/eams/static/scripts/require.js"></script>
+	
+	<!-- backbone & underscore -- fontend MVC framework -->
+	<script type="text/javascript" src="/eams/static/scripts/underscore.min.js"></script>
+	<script type="text/javascript" src="/eams/static/scripts/backbone.min.js"></script>
+	<script type="text/javascript" src="/eams/static/scripts/underscore.string.min.js"></script>
+	<script>
+	require(['underscore.string'], function(_s) {
+	        _.str = _s;
+	        _.mixin(_.str.exports());
+	});
+	funcInit();
+	//beangle.ajaxhistory = false;
+	</script>
+	
+
+</head>
+<body>
+
+<div style="text-align: center;color: red;font-size: larger">
+	本科生预排课表(请切换至22232学期）
+</div>
+<link rel="stylesheet" type="text/css" href="/eams/static/css/lesson.css" />
+
+
+<div id="toolTipLayer" style="position:absolute; visibility: hidden"></div>
+<script language="JavaScript" type="text/JavaScript" src="/eams/static/scripts/prompt.js"></script> 
+<script>
+	var contents = new Object();
+	contents['430794']='苏畅 星期二 7-8 [1-16]  46楼A405  ';
+	contents['430796']='盛宇 星期一 9-10 [1-16]  46楼A205  ';
+	contents['430797']='冯公让 星期一 7-8 [1-16]  45楼B118  ';
+	contents['431111']='唐湛棋 星期三 7-8 [1-8]  45楼B207  ';
+	contents['430800']='郝音 星期四 7-8 [1-16]  46楼A205  ';
+	contents['431101']='丁伯慧 星期二 9-10 [1-8]  45楼B103  ';
+	contents['431116']='温洋 星期四 7-8 [1-16]  44楼A区104  ';
+	contents['431103']='郑惠江 星期二 9-10 [9-16]  33楼201  <br>孙涛 星期二 9-10 [1-8]  33楼201  ';
+	contents['431117']='李凤臣 星期三 7-8 [1-16]  33楼211  ';
+	contents['431114']='黄艳群 星期二 9-10 [1-8]  45楼B404  ';
+	contents['431115']='卢广华 星期三 7-8 [1-16]  44楼A区106  ';
+	contents['431106']='蒋浩然 星期四 9-10 [13-16]  33楼201  <br>李扬 星期四 9-10 [9-12]  33楼201  <br>赵睿恺 星期四 9-10 [5-8]  33楼201  <br>尹燕 星期四 9-10 [1-4]  33楼201  ';
+	contents['431107']='王潜龙 星期二 9-10 [7-8]  45楼B109  <br>陈志豪 星期二 9-10 [4-6]  45楼B109  <br>邓帅 星期二 9-10 [1-3]  45楼B109  ';
+	contents['431113']='唐湛棋 星期四 9-10 [9-16]  46楼A408  ';
+	contents['431108']='苏彩虹 星期四 7-8 [1-16]  33楼187  ';
+	contents['431109']='王潜龙 星期三 9-10 [1-8]  46楼A108  ';
+	contents['431096']='范胜波 星期三 7-8 [1-16]  45楼B103  ';
+	contents['431099']='李小斌 星期一 9-10 [1-8]  45楼B410  ';
+	contents['431098']='安彦召 星期四 9-11 [12-16]  45楼B412  <br>王昆 星期四 9-11 [7-11]  45楼B412  <br>邬斌扬 星期四 9-11 [1-6]  45楼B412  ';
+	contents['431097']='蒋浩然 星期三 7-8 [1-16]  33楼205  ';
+	function displayArrangeResult(taskId){
+  		var msg = "没有安排";
+  		if(null != contents[taskId] && contents[taskId].replace(/\s/g, '') != '') {
+	 		msg = contents[taskId];
+ 		}
+		toolTip(msg,'#000000', '#FFFF00',250);
+	}
+	initToolTips();
+</script><form id="taskListForm" name="taskListForm" action="/eams/stdSyllabus!search.action" method="post"  >
+
+<div class="grid">
+
+<div id="grid9894262711_bar1" class="gridbar"></div>
+<table id="grid9894262711" class="gridtable">
+<thead class="gridhead">
+
+<tr>
+  <th class="gridselect-top"  width="25px"><input type="submit" id="grid9894262711_filter_submit" value="" onclick="bg.form.submit('taskListForm',null,null,clearCheckbox_grid9894262711);return false;" class="grid-filter-submit"/>
+</th>
+<th title="课程序号" width="4%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.no"  maxlength="100" value="" style="width:100%;"/></div>  </th>
+<th title="课程代码" width="5%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.course.code"  maxlength="100" value="" style="width:100%;"/></div>  </th>
+<th title="课程名称" width="15%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.course.name"  maxlength="100" value="" style="width:100%;"/></div>  </th>
+<th title="课程类别" width="10%" style="padding-left:3px">	  		<input name="multiOrCourseType.name" type="text" style="width:95%;" value="选修" maxlength="100"/>
+  </th>
+<th title="开课校区" width="7%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.campus.name"  maxlength="100" value="北洋园" style="width:100%;"/></div>  </th>
+<th title="教学班" width="23%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.teachClass.name"  maxlength="100" value="2022级" style="width:100%;"/></div>  </th>
+<th title="教师" width="7%" style="padding-left:3px">	  		<input name="teacher.name" type="text" style="width:95%;" value="" maxlength="100"/>
+  </th>
+<th title="实际" width="5%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.teachClass.stdCount"  maxlength="100" value="" style="width:100%;"/></div>  </th>
+<th title="上限" width="5%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.teachClass.limitCount"  maxlength="100" value="" style="width:100%;"/></div>  </th>
+<th title="学分" width="5%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.course.credits"  maxlength="100" value="" style="width:100%;"/></div>  </th>
+<th title="学时/周" width="5%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.coursePeriod"  maxlength="100" value="" style="width:100%;"/></div>  </th>
+<th width="5%"></th><th title="课程大纲" width="4%" style="padding-left:3px">	    	<select name="syllabus" style="width:95%">
+	            <option value="">...</option>
+	            <option value="1">有</option>
+	            <option value="0">无</option>
+	        </select> 	  		
+  </th>
+</tr>
+
+<tr>
+<th  class="gridselect-top" ><input type="checkbox" name="lesson.idbox" onclick="bg.ui.grid.toggleAll(event)" title="选择全部"/> </th>
+<th  class="gridhead-sortable" id="lesson.no">课程序号</th>
+<th  class="gridhead-sortable" id="lesson.course.code">课程代码</th>
+<th  class="gridhead-sortable" id="lesson.course.name">课程名称</th>
+<th  class="gridhead-sortable" id="lesson.courseType.name">课程类别</th>
+<th  class="gridhead-sortable" id="lesson.campus.name">开课校区</th>
+<th  class="gridhead-sortable" id="lesson.teachClass.name">教学班</th>
+<th  >教师</th>
+<th  class="gridhead-sortable" id="lesson.teachClass.stdCount">实际</th>
+<th  class="gridhead-sortable" id="lesson.teachClass.limitCount">上限</th>
+<th  class="gridhead-sortable" id="lesson.course.credits">学分</th>
+<th  class="gridhead-sortable" id="lesson.coursePeriod">学时/周</th>
+<th  class="gridhead-sortable" id="lesson.courseSchedule.weekState">起止周</th>
+<th  >课程大纲</th>
+</tr>
+
+</thead>
+
+<tbody id="grid9894262711_data"><tr><td class="gridselect"><input class="box" name="lesson.id" value="430794" type="checkbox"/></td><td>04094</td><td>5100020</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=430794" onclick="return bg.Go(this,null)" title="查看任务详细信息">世界经典音乐赏评与比较</a></td><td>      	文化素质选修-艺术,
+      	文化素质选修-艺术与美学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>苏畅</td><td>0</td><td>120</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="430796" type="checkbox"/></td><td>04096</td><td>3030004</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=430796" onclick="return bg.Go(this,null)" title="查看任务详细信息">影视欣赏</a></td><td>      	文化素质选修-艺术,
+      	文化素质选修-艺术与美学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>盛宇</td><td>0</td><td>120</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="430797" type="checkbox"/></td><td>04097</td><td>3030003</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=430797" onclick="return bg.Go(this,null)" title="查看任务详细信息">二十世纪西方音乐</a></td><td>      	文化素质选修-艺术,
+      	文化素质选修-艺术与美学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>冯公让</td><td>0</td><td>120</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="430800" type="checkbox"/></td><td>04100</td><td>3030028</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=430800" onclick="return bg.Go(this,null)" title="查看任务详细信息">中外歌剧鉴赏</a></td><td>      	文化素质选修-艺术,
+      	文化素质选修-艺术与美学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>郝音</td><td>0</td><td>90</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431096" type="checkbox"/></td><td>04281</td><td>2010995</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431096" onclick="return bg.Go(this,null)" title="查看任务详细信息">产品生产体验</a></td><td>      	文化素质选修-新工科创新,
+      	文化素质选修-法律、经管、社会
+</td><td>北洋园校区</td><td>年级:2019级 2020级 2021级 2022级</td><td>范胜波</td><td>0</td><td>30</td><td>1</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431097" type="checkbox"/></td><td>04282</td><td>2010993</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431097" onclick="return bg.Go(this,null)" title="查看任务详细信息">储能技术及应用</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>蒋浩然</td><td>0</td><td>100</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431098" type="checkbox"/></td><td>04283</td><td>2010983</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431098" onclick="return bg.Go(this,null)" title="查看任务详细信息">航空发动机原理</a></td><td>      	文化素质选修-自然科学,
+      	文化素质选修-新工科创新
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>邬斌扬,王昆,安彦召</td><td>0</td><td>80</td><td>3</td>      <td>48/3</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431099" type="checkbox"/></td><td>04284</td><td>2010997</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431099" onclick="return bg.Go(this,null)" title="查看任务详细信息">空间推进技术导引</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>李小斌</td><td>0</td><td>80</td><td>1</td>      <td>16/2</td>
+      <td>1-8</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431101" type="checkbox"/></td><td>04286</td><td>2010976</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431101" onclick="return bg.Go(this,null)" title="查看任务详细信息">面向未来的创新设计与智能制造</a></td><td>      	文化素质选修-自然科学,
+      	文化素质选修-新工科创新
+</td><td>北洋园校区</td><td>年级:2021级 2022级</td><td>丁伯慧</td><td>0</td><td>30</td><td>1</td>      <td>16/2</td>
+      <td>1-8</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431103" type="checkbox"/></td><td>04288</td><td>2010935</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431103" onclick="return bg.Go(this,null)" title="查看任务详细信息">机械工程发展史</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>孙涛,郑惠江</td><td>0</td><td>60</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431106" type="checkbox"/></td><td>04291</td><td>2010989</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431106" onclick="return bg.Go(this,null)" title="查看任务详细信息">碳中和：能源动力系统</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>尹燕,蒋浩然,赵睿恺,李扬</td><td>0</td><td>100</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431107" type="checkbox"/></td><td>04292</td><td>2010943</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431107" onclick="return bg.Go(this,null)" title="查看任务详细信息">热科学史：易涨易落遍历情，时冷时热可几心</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>邓帅,陈志豪,王潜龙</td><td>0</td><td>200</td><td>1</td>      <td>16/2</td>
+      <td>1-8</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431108" type="checkbox"/></td><td>04293</td><td>2010900</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431108" onclick="return bg.Go(this,null)" title="查看任务详细信息">临近空间飞行器的空气动力学新问题</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>苏彩虹</td><td>0</td><td>60</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431109" type="checkbox"/></td><td>04294</td><td>2010951</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431109" onclick="return bg.Go(this,null)" title="查看任务详细信息">心理学与生活</a></td><td>      	文化素质选修-环境、心理、健康,
+      	文化素质选修-思维培养与沟通表达
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>王潜龙</td><td>0</td><td>200</td><td>1</td>      <td>16/2</td>
+      <td>1-8</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431111" type="checkbox"/></td><td>04296</td><td>2010911</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431111" onclick="return bg.Go(this,null)" title="查看任务详细信息">诗情画意谈力学（翻转）</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>唐湛棋</td><td>0</td><td>150</td><td>1</td>      <td>16/2</td>
+      <td>1-8</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431113" type="checkbox"/></td><td>04298</td><td>2010917</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431113" onclick="return bg.Go(this,null)" title="查看任务详细信息">谈风说雨话力学</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>唐湛棋</td><td>0</td><td>150</td><td>1</td>      <td>16/2</td>
+      <td>9-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431114" type="checkbox"/></td><td>04299</td><td>2010915</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431114" onclick="return bg.Go(this,null)" title="查看任务详细信息">设计心理学</a></td><td>      	文化素质选修-环境、心理、健康,
+      	文化素质选修-社会与哲学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>黄艳群</td><td>0</td><td>150</td><td>1</td>      <td>16/2</td>
+      <td>1-8</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431115" type="checkbox"/></td><td>04300</td><td>2010992</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431115" onclick="return bg.Go(this,null)" title="查看任务详细信息">金属液态成形创新训练</a></td><td>      	文化素质选修-自然科学,
+      	文化素质选修-新工科创新
+</td><td>北洋园校区</td><td>年级:2019级 2020级 2021级 2022级</td><td>卢广华</td><td>0</td><td>30</td><td>1</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431116" type="checkbox"/></td><td>04301</td><td>2010994</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431116" onclick="return bg.Go(this,null)" title="查看任务详细信息">工程基本技能基础</a></td><td>      	文化素质选修-自然科学,
+      	文化素质选修-新工科创新
+</td><td>北洋园校区</td><td>年级:2019级 2020级 2021级 2022级</td><td>温洋</td><td>0</td><td>30</td><td>1</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr><tr><td class="gridselect"><input class="box" name="lesson.id" value="431117" type="checkbox"/></td><td>04302</td><td>2010981</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=431117" onclick="return bg.Go(this,null)" title="查看任务详细信息">核能工程与先进核能利用技术</a></td><td>      	文化素质选修-自然科学
+</td><td>北洋园校区</td><td>年级:2019级 2021级 2020级 2022级</td><td>李凤臣</td><td>0</td><td>100</td><td>2</td>      <td>32/2</td>
+      <td>1-16</td>
+      <td>有</td>
+</tr></tbody>
+</table>
+<div id="grid9894262711_bar2"  class="gridbar"></div>
+</div>
+<script type="text/javascript">
+  var clearCheckbox_grid9894262711 = function() {
+    jQuery("#grid9894262711").find(".box:checkbox").removeProp("checked");
+    jQuery("#grid9894262711").find(".gridselect-top :checkbox").removeProp("checked");
+    return true;
+  }
+  
+  page_grid9894262711 = bg.page("/eams/stdSyllabus!search.action","");
+  {
+    var _paramstring = 'lesson.no=&lesson.course.code=&lesson.course.name=&multiOrCourseType.name=%E9%80%89%E4%BF%AE&lesson.campus.name=%E5%8C%97%E6%B4%8B%E5%9B%AD&lesson.teachClass.name=2022%E7%BA%A7&pageNo=1';
+    var _params = _paramstring.split('&');
+    for (var i = 0; i < _params.length; i++) {
+      _params[i] = decodeURIComponent(_params[i]);
+    }
+    _paramstring = _params.join('&');
+    page_grid9894262711.target("",'grid9894262711').action("/eams/stdSyllabus!search.action").addParams(_paramstring).orderBy("null");
+  }
+  bg.ui.grid.init('grid9894262711',page_grid9894262711);
+  bar=new bg.ui.gridbar(['grid9894262711_bar1','grid9894262711_bar2'],'');
+  bar.pageId('grid9894262711')
+  page_grid9894262711.pageInfo(1,20,205);
+  bar.addPage(page_grid9894262711,null,{first:'«首页',previous:'‹前页',next:'后页›',last:'末页»',no:'页码:',size:'每页',change:'点击改变每页数据量',pagesize:'每页数据量'});
+  
+  action=bar.addEntityAction('lesson',page_grid9894262711);
+  			bar.addItem("查看",action.info());		
+			bar.addItem("查看课程大纲",action.single("syllabusInfo"));	
+
+</script>
+
+</form>
+<script>
+	jQuery(function(){
+		bg.form.addHiddens(document.taskListForm, "&multiOrCourseType.name=选修&lesson.campus.name=北洋园&lesson.teachClass.name=2022级&pageNo=1");
+		jQuery("#taskListForm .griddata-even,#taskListForm .griddata-odd").mouseover(function(){
+			displayArrangeResult(jQuery(".box",this).val());
+		}).mouseout(function(){
+			toolTip();
+		});
+	});
+</script>
+
+  <script type="text/javascript">
+  	$(function() {
+  	  if(bg.Go != undefined) {
+  	    var originalGo = bg.Go;
+  	    bg.Go = function (obj, target, historyMode, historyData) {
+  	      if(target == "main") {
+  	        target = "_self";
+  	      }
+
+  	      return originalGo(obj, target, historyMode, historyData);
+  	    }
+  	  }
+
+	  $(".toolbar").each(function() {
+        if($(this).prev().length==0 && $(this).find(".toolbar-item").length==0) {
+          $(this).css("display", "none");
+        }
+	  });
+      $(".search-widget").css("margin-left", "auto");
+      
+      var $chosenObj = $("select[class='chosen-simple']");
+      if($chosenObj.length > 0) {
+ 		$chosenObj.chosen({search_contains: true, placeholder_text: '...'});
+		$chosenObj.val('-1');
+		$chosenObj.trigger('chosen:updated');
+      }
+    });
+  </script>
+</body>
+</html>
