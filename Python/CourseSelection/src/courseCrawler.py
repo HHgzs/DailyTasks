@@ -5,7 +5,7 @@ import time
 import json
 
 dataRead = dict()
-with open("CourseSelection/Files/search.json", "r", encoding="utf-8") as jsonFile:
+with open("CourseSelection/conf/search.json", "r", encoding="utf-8") as jsonFile:
     dataRead = json.load(jsonFile)
 
 
@@ -24,6 +24,7 @@ def fileNameInit(dataRead):
 
 
 Cookie = dataRead["cookie"]
+semesterInput = "lesson.semester.id=" + dataRead["semester"]
 courseSerialInput = "lesson.no=" + dataRead["courseSerial"]
 courseCodeInput = "lesson.course.code=" + dataRead["courseCode"]
 courseNameInput = "lesson.course.name=" + dataRead['courseName']
@@ -37,13 +38,13 @@ fileName = fileNameInit(dataRead)
 
 initURL = "http://classes.tju.edu.cn/eams/stdSyllabus!search.action"
 
-initURL += "?" + plusStr(courseSerialInput) + plusStr(
+initURL += "?" + plusStr(semesterInput) + plusStr(courseSerialInput) + plusStr(
     courseCodeInput) + plusStr(courseNameInput) + plusStr(
         courseTypeInput) + plusStr(campusInput) + plusStr(
             classNameInput) + pageInput
 
 if Cookie == "":
-    with open("CourseSelection/Files/cookie.txt", "r") as fCookie:
+    with open("CourseSelection/conf/cookie.txt", "r") as fCookie:
         Cookie = fCookie.readline()
         fCookie.close()
 
@@ -96,6 +97,16 @@ while num:
         re.S  # 匹配换行
     )
 
+    objPage3 = re.compile(
+        r'<td class="gridselect">.*?name.*?lesson.id.*?value="(?P<class_id>.*?)" type.*?</td>'
+        r'<td>(?P<task_code>.*?)</td>'
+        r'<td>(?P<course_code>.*?)</td>.*?title.*?">(?P<name>.*?)</a>.*?'
+        r'<td>.*?</td><td>.*?</td><td>.*?</td>'
+        r'<td>(?P<teacher>.*?)</td><td>.*?</td.*?td>.*?</td.*?td>(?P<credits>.*?)'
+        r'</td.*?td>(?P<hours_week>.*?)</td>',
+        re.S  # 匹配换行
+    )
+
     objTime = re.compile(
         r"contents[[]'(?P<course_code>.*?)'[]]=.*?星期(?P<day_cn>.) (?P<begin_time>.)-"
     )
@@ -110,7 +121,7 @@ while num:
             writer.writerow(dic.values())
         fCourse.close()
 
-    result = objPage2.finditer(page_content)
+    result = objPage3.finditer(page_content)
 
     FileDirc = "CourseSelection/Files/Course/Course" + fileName + ".csv"
     with open(FileDirc, "a", encoding="utf-8", newline='') as fCourse:

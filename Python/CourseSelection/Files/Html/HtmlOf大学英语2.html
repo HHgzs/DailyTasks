@@ -90,12 +90,12 @@
 
 <div class="grid">
 
-<div id="grid8285385111_bar1" class="gridbar"></div>
-<table id="grid8285385111" class="gridtable">
+<div id="grid16860046271_bar1" class="gridbar"></div>
+<table id="grid16860046271" class="gridtable">
 <thead class="gridhead">
 
 <tr>
-  <th class="gridselect-top"  width="25px"><input type="submit" id="grid8285385111_filter_submit" value="" onclick="bg.form.submit('taskListForm',null,null,clearCheckbox_grid8285385111);return false;" class="grid-filter-submit"/>
+  <th class="gridselect-top"  width="25px"><input type="submit" id="grid16860046271_filter_submit" value="" onclick="bg.form.submit('taskListForm',null,null,clearCheckbox_grid16860046271);return false;" class="grid-filter-submit"/>
 </th>
 <th title="课程序号" width="4%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.no"  maxlength="100" value="" style="width:100%;"/></div>  </th>
 <th title="课程代码" width="5%" style="padding-left:3px"><div style="margin-right:6px"><input type="text" name="lesson.course.code"  maxlength="100" value="" style="width:100%;"/></div>  </th>
@@ -137,7 +137,7 @@
 
 </thead>
 
-<tbody id="grid8285385111_data"><tr><td class="gridselect"><input class="box" name="lesson.id" value="429870" type="checkbox"/></td><td>03315</td><td>2111293</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=429870" onclick="return bg.Go(this,null)" title="查看任务详细信息">大学英语2</a></td><td>      	外语
+<tbody id="grid16860046271_data"><tr><td class="gridselect"><input class="box" name="lesson.id" value="429870" type="checkbox"/></td><td>03315</td><td>2111293</td><td><a href="/eams/stdSyllabus!info.action?lesson.id=429870" onclick="return bg.Go(this,null)" title="查看任务详细信息">大学英语2</a></td><td>      	外语
 </td><td>北洋园校区</td><td>年级:2022级</td><td>高树勋</td><td>0</td><td>51</td><td>2</td>      <td>32/2</td>
       <td>1-16</td>
       <td>无</td>
@@ -219,32 +219,32 @@
       <td>无</td>
 </tr></tbody>
 </table>
-<div id="grid8285385111_bar2"  class="gridbar"></div>
+<div id="grid16860046271_bar2"  class="gridbar"></div>
 </div>
 <script type="text/javascript">
-  var clearCheckbox_grid8285385111 = function() {
-    jQuery("#grid8285385111").find(".box:checkbox").removeProp("checked");
-    jQuery("#grid8285385111").find(".gridselect-top :checkbox").removeProp("checked");
+  var clearCheckbox_grid16860046271 = function() {
+    jQuery("#grid16860046271").find(".box:checkbox").removeProp("checked");
+    jQuery("#grid16860046271").find(".gridselect-top :checkbox").removeProp("checked");
     return true;
   }
   
-  page_grid8285385111 = bg.page("/eams/stdSyllabus!search.action","");
+  page_grid16860046271 = bg.page("/eams/stdSyllabus!search.action","");
   {
-    var _paramstring = 'lesson.no=&lesson.course.code=&lesson.course.name=%E5%A4%A7%E5%AD%A6%E8%8B%B1%E8%AF%AD2&multiOrCourseType.name=&lesson.campus.name=%E5%8C%97%E6%B4%8B%E5%9B%AD&lesson.teachClass.name=2022&pageNo=1';
+    var _paramstring = 'lesson.semester.id=77&lesson.no=&lesson.course.code=&lesson.course.name=%E5%A4%A7%E5%AD%A6%E8%8B%B1%E8%AF%AD2&multiOrCourseType.name=&lesson.campus.name=%E5%8C%97%E6%B4%8B%E5%9B%AD&lesson.teachClass.name=2022&pageNo=1';
     var _params = _paramstring.split('&');
     for (var i = 0; i < _params.length; i++) {
       _params[i] = decodeURIComponent(_params[i]);
     }
     _paramstring = _params.join('&');
-    page_grid8285385111.target("",'grid8285385111').action("/eams/stdSyllabus!search.action").addParams(_paramstring).orderBy("null");
+    page_grid16860046271.target("",'grid16860046271').action("/eams/stdSyllabus!search.action").addParams(_paramstring).orderBy("null");
   }
-  bg.ui.grid.init('grid8285385111',page_grid8285385111);
-  bar=new bg.ui.gridbar(['grid8285385111_bar1','grid8285385111_bar2'],'');
-  bar.pageId('grid8285385111')
-  page_grid8285385111.pageInfo(1,20,46);
-  bar.addPage(page_grid8285385111,null,{first:'«首页',previous:'‹前页',next:'后页›',last:'末页»',no:'页码:',size:'每页',change:'点击改变每页数据量',pagesize:'每页数据量'});
+  bg.ui.grid.init('grid16860046271',page_grid16860046271);
+  bar=new bg.ui.gridbar(['grid16860046271_bar1','grid16860046271_bar2'],'');
+  bar.pageId('grid16860046271')
+  page_grid16860046271.pageInfo(1,20,46);
+  bar.addPage(page_grid16860046271,null,{first:'«首页',previous:'‹前页',next:'后页›',last:'末页»',no:'页码:',size:'每页',change:'点击改变每页数据量',pagesize:'每页数据量'});
   
-  action=bar.addEntityAction('lesson',page_grid8285385111);
+  action=bar.addEntityAction('lesson',page_grid16860046271);
   			bar.addItem("查看",action.info());		
 			bar.addItem("查看课程大纲",action.single("syllabusInfo"));	
 
@@ -253,7 +253,7 @@
 </form>
 <script>
 	jQuery(function(){
-		bg.form.addHiddens(document.taskListForm, "&lesson.course.name=大学英语2&lesson.campus.name=北洋园&lesson.teachClass.name=2022&pageNo=1");
+		bg.form.addHiddens(document.taskListForm, "&lesson.semester.id=77&lesson.course.name=大学英语2&lesson.campus.name=北洋园&lesson.teachClass.name=2022&pageNo=1");
 		jQuery("#taskListForm .griddata-even,#taskListForm .griddata-odd").mouseover(function(){
 			displayArrangeResult(jQuery(".box",this).val());
 		}).mouseout(function(){

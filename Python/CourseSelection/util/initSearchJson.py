@@ -7,9 +7,11 @@ data = {
     "courseName": "",
     "courseType": "",
     "campus": "",
-    "className": ""
+    "className": "",
+    "semester": "77"
+
 }
 
-with open("CourseSelection/Files/search.json", "w", encoding="utf-8") as jsonFile:
+with open("CourseSelection/conf/class.json", "w", encoding="utf-8") as jsonFile:
     json.dump(data, jsonFile, ensure_ascii=False)
     print("successfully create jsonFile")
