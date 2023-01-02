@@ -26,6 +26,7 @@ class crawer:
             dataRead = json.load(jsonFile)
 
         Cookie = dataRead["cookie"]
+        semesterInput = "lesson.semester.id=" + dataRead["semester"]
         courseSerialInput = "lesson.no=" + dataRead["courseSerial"]
         courseCodeInput = "lesson.course.code=" + dataRead["courseCode"]
         courseNameInput = "lesson.course.name=" + dataRead['courseName']
@@ -39,11 +40,10 @@ class crawer:
 
         initURL = "http://classes.tju.edu.cn/eams/stdSyllabus!search.action"
 
-        initURL += "?" + crawer.plusStr(courseSerialInput) + crawer.plusStr(
-            courseCodeInput
-        ) + crawer.plusStr(courseNameInput) + crawer.plusStr(
-            courseTypeInput) + crawer.plusStr(campusInput) + crawer.plusStr(
-                classNameInput) + pageInput
+        initURL += "?" + crawer.plusStr(semesterInput) + crawer.plusStr(
+            courseSerialInput) + crawer.plusStr(courseCodeInput) + crawer.plusStr(
+                courseNameInput) + crawer.plusStr(courseTypeInput) + crawer.plusStr(
+                    campusInput) + crawer.plusStr(classNameInput) + pageInput
 
         if Cookie == "":
             with open("CourseSelection/Files/cookie.txt", "r") as fCookie:
